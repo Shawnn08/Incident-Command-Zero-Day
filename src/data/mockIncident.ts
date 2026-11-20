@@ -1,0 +1,193 @@
+import type { IncidentManifest } from "./types";
+
+export const activeP0Incident: IncidentManifest = {
+  id: "INC-8492",
+  title: "Edge Anycast BGP Route Leak & Tier-1 Transit Partition",
+  organization: "AetherNet Global Cloud",
+  severity: "P0 - CRITICAL",
+  status: "IDENTIFIED",
+  startedAt: "2026-11-20T21:04:12Z",
+  detectedAt: "2026-11-20T21:07:30Z",
+  mitigatedAt: "Pending Full Convergence",
+  durationMinutes: 38,
+  commander: {
+    name: "Dr. Elena Vance",
+    role: "Staff Reliability Architect & Incident Commander",
+    contact: "ops-bridge-8492@aethernet.internal",
+  },
+  metrics: {
+    peakErrorRate: "14.8%",
+    packetLoss: "38.2%",
+    affectedPoPs: 14,
+    totalPoPs: 48,
+    impactedRequests: "4.82 Million",
+    slaAvailability: "99.28%",
+  },
+  summary:
+    "An unvalidated BGP community export from an upstream transit provider caused unauthorized prefix re-announcements, causing edge traffic across EU-Central and US-East to be routed into an overloaded third-party autonomous system (AS64512), resulting in elevated 502/504 errors.",
+  rootCause:
+    "A filter mismatch in peering route-maps failed to reject route-leak advertisements containing RFC 7908 anomalies during scheduled upstream maintenance.",
+  timeline: [
+    {
+      timestamp: "21:04 UTC",
+      phase: "T+00m",
+      title: "Automated Edge Telemetry Alert",
+      description: "Anycast edge probing detected packet loss spike to 38.2% across Frankfurt, London, and Ashburn PoPs.",
+      actor: "Edge-Monitor-v4 (Synthetic Probes)",
+      status: "critical",
+    },
+    {
+      timestamp: "21:07 UTC",
+      phase: "T+03m",
+      title: "Incident Commander Paged & War Room Declared",
+      description: "P0 declared by NetOps. Emergency cross-functional war room bridge opened on Slack #inc-8492 and Zoom.",
+      actor: "Dr. Elena Vance",
+      status: "warning",
+    },
+    {
+      timestamp: "21:18 UTC",
+      phase: "T+14m",
+      title: "Upstream BGP Leak Confirmed",
+      description: "Looking glass diagnostics confirmed AS64512 was advertising unauthorized more-specific /24 routes for AetherNet prefixes.",
+      actor: "Marcus Brody (Principal Network Engineer)",
+      status: "info",
+    },
+    {
+      timestamp: "21:32 UTC",
+      phase: "T+28m",
+      title: "BGP Prefix Poisoning & Blackholing Initiated",
+      description: "Emergency BGP NO_EXPORT community flags dispatched to Tier-1 transit to isolate contaminated routes.",
+      actor: "Automated Routing Controller",
+      status: "warning",
+    },
+  ],
+  impactedServices: [
+    {
+      name: "Edge API Gateway",
+      region: "EU-West (London) / US-East (Virginia)",
+      impactLevel: "DEGRADED",
+      errorRate: "12.4%",
+      latencyDelta: "+340ms",
+    },
+    {
+      name: "Anycast DNS Resolution",
+      region: "Global Tier-1",
+      impactLevel: "DEGRADED",
+      errorRate: "8.1%",
+      latencyDelta: "+180ms",
+    },
+    {
+      name: "Static Asset CDN",
+      region: "EU-Central (Frankfurt)",
+      impactLevel: "OFFLINE",
+      errorRate: "42.6%",
+      latencyDelta: "+820ms",
+    },
+    {
+      name: "Authentication Auth0 Proxy",
+      region: "US-West (Oregon)",
+      impactLevel: "OPERATIONAL",
+      errorRate: "0.02%",
+      latencyDelta: "+12ms",
+    },
+  ],
+  fiveWhys: [
+    {
+      level: 1,
+      question: "Why did 4.8 million requests fail with 502/504 timeouts?",
+      answer: "Edge traffic was routed into transit peer AS64512 which lacked capacity and dropped packets.",
+    },
+    {
+      level: 2,
+      question: "Why did traffic route to AS64512?",
+      answer: "AS64512 announced more-specific /24 prefixes that overrode AetherNet's global /20 anycast advertisements.",
+    },
+    {
+      level: 3,
+      question: "Why did our border routers accept those advertisements?",
+      answer: "The BGP route-map filter relied on strict AS-Path filtering but lacked RPKI Origin Validation enforcement on secondary sessions.",
+    },
+    {
+      level: 4,
+      question: "Why was RPKI validation not enforced on those sessions?",
+      answer: "The BGP peering template migration completed last month excluded legacy secondary sessions due to router firmware incompatibilities.",
+    },
+    {
+      level: 5,
+      question: "Why was the firmware incompatibility not remediated prior to maintenance?",
+      answer: "Hardware lifecycle refresh for Frankfurt and London border routers had been delayed pending Q4 maintenance windows.",
+    },
+  ],
+  actionItems: [
+    {
+      id: "SEC-9021",
+      description: "Enforce strict RPKI Route Origin Validation (ROV) on all border BGP transit interfaces.",
+      owner: "Network Infrastructure Team",
+      priority: "P0",
+      dueDate: "2026-11-22",
+      status: "IN_PROGRESS",
+    },
+    {
+      id: "NET-4182",
+      description: "Deploy automated BGP route-leak detection bot to automatically tear down misbehaving peer sessions.",
+      owner: "Reliability Automation",
+      priority: "P1",
+      dueDate: "2026-11-27",
+      status: "OPEN",
+    },
+    {
+      id: "AUD-1049",
+      description: "Deliver signed SOC2 / ISO-27001 executive post-mortem to affected enterprise customers.",
+      owner: "Compliance & Legal",
+      priority: "P1",
+      dueDate: "2026-11-24",
+      status: "IN_PROGRESS",
+    },
+  ],
+  compliance: {
+    auditHash: "SHA256:e8f1b29a7384dc9210c4bf49129e00185c88421aef429b671e",
+    classification: "HIGH CONFIDENTIALITY // SOC2 TYPE II & ISO-27001 AUDIT RECORD",
+    signedByVp: "Marcus Thorne, VP of Global Infrastructure",
+    signedBySec: "Sarah Lin, Chief Information Security Officer (CISO)",
+    signDate: "2026-11-20 22:15 UTC",
+  },
+};
+
+export const resolvedIncident: IncidentManifest = {
+  ...activeP0Incident,
+  status: "RESOLVED",
+  mitigatedAt: "2026-11-20T22:02:18Z",
+  durationMinutes: 58,
+  metrics: {
+    ...activeP0Incident.metrics,
+    peakErrorRate: "0.01%",
+    packetLoss: "0.00%",
+    affectedPoPs: 0,
+    slaAvailability: "99.98%",
+  },
+  timeline: [
+    ...activeP0Incident.timeline,
+    {
+      timestamp: "21:44 UTC",
+      phase: "T+40m",
+      title: "Transit Peer Session Reset",
+      description: "All upstream sessions with AS64512 hard-reset; route tables flushed and re-converged.",
+      actor: "Dr. Elena Vance",
+      status: "info",
+    },
+    {
+      timestamp: "22:02 UTC",
+      phase: "T+58m",
+      title: "Full Anycast Telemetry Convergence",
+      description: "Edge error rates returned to baseline (<0.02%). All 48 PoPs healthy. Incident mitigated.",
+      actor: "Operations Center",
+      status: "success",
+    },
+  ],
+  impactedServices: activeP0Incident.impactedServices.map((s) => ({
+    ...s,
+    impactLevel: "OPERATIONAL",
+    errorRate: "0.01%",
+    latencyDelta: "+0ms",
+  })),
+};

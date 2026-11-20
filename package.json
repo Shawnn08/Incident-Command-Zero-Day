@@ -1,0 +1,33 @@
+{
+  "name": "incident-command-zero-day",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "One incident manifest -> Emergency SLA Email, Live Status Page, Formal SOC2 RCA PDF, and Resolution Social Badge",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "check": "hyper-elements check src/templates/*.tsx",
+    "render-templates": "hyper-elements render src/templates/*.tsx --out dist/templates"
+  },
+  "dependencies": {
+    "@hyper-elements/react": "^0.5.2",
+    "@react-pdf/renderer": "^4.9.0",
+    "@resvg/resvg-js": "^2.6.2",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "satori": "^0.63.2"
+  },
+  "devDependencies": {
+    "@hyper-elements/cli": "^0.3.3",
+    "@types/node": "^22.13.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}
