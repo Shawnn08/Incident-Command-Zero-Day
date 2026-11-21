@@ -165,7 +165,7 @@ npx hyper-elements check (Get-ChildItem src/templates/*.tsx | Select-Object -Exp
 
 ### 1. Clone & Install Dependencies
 ```bash
-git clone https://github.com/your-username/incident-command-zero-day.git
+git clone https://github.com/Shawnn08/incident-command-zero-day.git
 cd incident-command-zero-day
 npm install
 ```
