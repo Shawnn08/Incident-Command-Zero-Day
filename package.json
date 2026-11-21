@@ -8,18 +8,18 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "check": "hyper-elements check src/templates/*.tsx",
-    "render-templates": "hyper-elements render src/templates/*.tsx --out dist/templates"
+    "check": "hyper-elements check src/templates/IncidentEmail.tsx src/templates/IncidentWebPage.tsx src/templates/IncidentAuditDoc.tsx src/templates/IncidentSocialCard.tsx",
+    "render-templates": "hyper-elements render src/templates/IncidentEmail.tsx src/templates/IncidentWebPage.tsx src/templates/IncidentAuditDoc.tsx --out dist/templates"
   },
   "dependencies": {
     "@hyper-elements/react": "^0.5.2",
-    "@react-pdf/renderer": "^4.9.0",
+    "@react-pdf/renderer": "^4.3.2",
     "@resvg/resvg-js": "^2.6.2",
     "clsx": "^2.1.1",
     "lucide-react": "^1.16.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "satori": "^0.63.2"
+    "satori": "^0.33.5"
   },
   "devDependencies": {
     "@hyper-elements/cli": "^0.3.3",
@@ -27,6 +27,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "puppeteer": "^25.18.1",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"
   }

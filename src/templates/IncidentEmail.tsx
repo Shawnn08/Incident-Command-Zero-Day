@@ -23,9 +23,10 @@ const EmailRoot = Email as any;
 
 export default function IncidentEmail({ incident = activeP0Incident }: IncidentEmailProps) {
   const isResolved = incident.status === "RESOLVED";
-  const statusColor = isResolved ? "#34d399" : "#f87171";
-  const statusBg = isResolved ? "#064e3b" : "#450a0a";
-  const btnBg = isResolved ? "#059669" : "#dc2626";
+  const statusColor = isResolved ? "#6ee7b7" : "#fda4af";
+  const statusBg = isResolved ? "rgba(110, 231, 183, 0.14)" : "rgba(253, 164, 175, 0.14)";
+  const statusBorder = isResolved ? "rgba(110, 231, 183, 0.35)" : "rgba(253, 164, 175, 0.35)";
+  const btnBg = isResolved ? "#0d9488" : "#be123c";
 
   return (
     <EmailRoot
@@ -38,88 +39,88 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
         gap: 16,
       }}
     >
-      {/* Brand Header & Severity Banner */}
+      {/* Brand Header & Severity Banner (Outer: 10px radius) */}
       <Column
         style={{
-          backgroundColor: "#0f172a",
+          backgroundColor: "#151e1b",
           padding: 24,
-          borderRadius: 8,
-          border: { width: 1, style: "solid", color: "#1e293b" },
-          gap: 14,
+          borderRadius: 10,
+          border: { width: 1, style: "solid", color: "#283832" },
+          gap: 16,
         }}
       >
         <Row stackOnMobile style={{ alignItems: "center", gap: 12 }}>
           <Column style={{ gap: 4 }}>
-            <Text style={{ fontSize: 14, color: "#94a3b8", textTransform: "uppercase", letterSpacing: 1 }}>
-              {incident.organization} • Ops Bridge
+            <Text style={{ fontSize: 13, color: "#2dd4bf", textTransform: "uppercase", letterSpacing: 1, fontWeight: 700 }}>
+              {incident.organization} • Ops Bridge Dispatch
             </Text>
-            <Heading level={1} style={{ fontSize: 22, color: "#ffffff", fontWeight: 700 }}>
+            <Heading level={1} style={{ fontSize: 24, color: "#e6f0ec", fontWeight: 800 }}>
               {incident.id}: {incident.title}
             </Heading>
           </Column>
           <Column
             style={{
               backgroundColor: statusBg,
-              padding: [6, 12],
-              borderRadius: 4,
-              border: { width: 1, style: "solid", color: statusColor },
+              padding: [8, 14],
+              borderRadius: 6,
+              border: { width: 1, style: "solid", color: statusBorder },
               alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 14, fontWeight: 700, color: statusColor, textTransform: "uppercase" }}>
+            <Text style={{ fontSize: 13, fontWeight: 700, color: statusColor, textTransform: "uppercase" }}>
               {incident.status}
             </Text>
           </Column>
         </Row>
 
-        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#1e293b" } }} />
+        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#283832" } }} />
 
-        {/* Executive Summary */}
-        <Text style={{ fontSize: 15, color: "#cbd5e1", lineHeight: 1.6 }}>
+        {/* Executive Summary (Strict 16px Body Copy) */}
+        <Text style={{ fontSize: 16, color: "#e6f0ec", lineHeight: 1.6 }}>
           {incident.summary}
         </Text>
 
-        {/* Metric Cards Row */}
+        {/* Metric Cards Row (Prominent 22px Numbers) */}
         <Row stackOnMobile style={{ gap: 12 }}>
           <Column
             style={{
-              backgroundColor: "#1e293b",
-              padding: 14,
+              backgroundColor: "#1e2a26",
+              padding: 16,
               borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#334155" },
+              border: { width: 1, style: "solid", color: "#283832" },
               gap: 4,
             }}
           >
-            <Text style={{ fontSize: 14, color: "#94a3b8" }}>Peak Error Rate</Text>
-            <Heading level={2} style={{ fontSize: 20, color: statusColor, fontWeight: 700 }}>
+            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Peak Error Rate</Text>
+            <Heading level={2} style={{ fontSize: 22, color: statusColor, fontWeight: 800 }}>
               {incident.metrics.peakErrorRate}
             </Heading>
           </Column>
           <Column
             style={{
-              backgroundColor: "#1e293b",
-              padding: 14,
+              backgroundColor: "#1e2a26",
+              padding: 16,
               borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#334155" },
+              border: { width: 1, style: "solid", color: "#283832" },
               gap: 4,
             }}
           >
-            <Text style={{ fontSize: 14, color: "#94a3b8" }}>Affected Edge PoPs</Text>
-            <Heading level={2} style={{ fontSize: 20, color: "#f8fafc", fontWeight: 700 }}>
+            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Affected PoPs</Text>
+            <Heading level={2} style={{ fontSize: 22, color: "#e6f0ec", fontWeight: 800 }}>
               {incident.metrics.affectedPoPs} / {incident.metrics.totalPoPs}
             </Heading>
           </Column>
           <Column
             style={{
-              backgroundColor: "#1e293b",
-              padding: 14,
+              backgroundColor: "#1e2a26",
+              padding: 16,
               borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#334155" },
+              border: { width: 1, style: "solid", color: "#283832" },
               gap: 4,
             }}
           >
-            <Text style={{ fontSize: 14, color: "#94a3b8" }}>Current Duration</Text>
-            <Heading level={2} style={{ fontSize: 20, color: "#f8fafc", fontWeight: 700 }}>
+            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Duration</Text>
+            <Heading level={2} style={{ fontSize: 22, color: "#e6f0ec", fontWeight: 800 }}>
               {incident.durationMinutes} min
             </Heading>
           </Column>
@@ -129,43 +130,43 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
       {/* Impacted Microservices Table */}
       <Column
         style={{
-          backgroundColor: "#0f172a",
+          backgroundColor: "#151e1b",
           padding: 24,
-          borderRadius: 8,
-          border: { width: 1, style: "solid", color: "#1e293b" },
+          borderRadius: 10,
+          border: { width: 1, style: "solid", color: "#283832" },
           gap: 14,
         }}
       >
-        <Heading level={2} style={{ fontSize: 16, color: "#ffffff", fontWeight: 600 }}>
-          Service Impact & Degradation Status
+        <Heading level={2} style={{ fontSize: 18, color: "#e6f0ec", fontWeight: 700 }}>
+          Subsystem Degradation Matrix
         </Heading>
 
         <Table
           style={{
-            cellPadding: [10, 8],
-            rowBorder: { width: 1, style: "solid", color: "#1e293b" },
+            cellPadding: [12, 10],
+            rowBorder: { width: 1, style: "solid", color: "#283832" },
             borderCollapse: "collapse",
           }}
         >
           <TableRow header>
-            <TableCell style={{ fontSize: 14, color: "#94a3b8" }}>Subsystem</TableCell>
-            <TableCell style={{ fontSize: 14, color: "#94a3b8" }}>Region</TableCell>
-            <TableCell style={{ fontSize: 14, color: "#94a3b8", textAlign: "right" }}>Health</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Subsystem</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Region</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#8aa399", textAlign: "right" }}>Health</TableCell>
           </TableRow>
           {incident.impactedServices.map((service, idx) => (
             <TableRow key={idx}>
-              <TableCell style={{ fontSize: 14, color: "#f8fafc", fontWeight: 500 }}>
+              <TableCell style={{ fontSize: 14, color: "#e6f0ec", fontWeight: 500 }}>
                 {service.name}
               </TableCell>
-              <TableCell style={{ fontSize: 14, color: "#94a3b8" }}>
+              <TableCell style={{ fontSize: 13, color: "#8aa399" }}>
                 {service.region}
               </TableCell>
               <TableCell
                 style={{
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: 600,
                   textAlign: "right",
-                  color: service.impactLevel === "OPERATIONAL" ? "#34d399" : service.impactLevel === "DEGRADED" ? "#fbbf24" : "#f87171",
+                  color: service.impactLevel === "OPERATIONAL" ? "#6ee7b7" : service.impactLevel === "DEGRADED" ? "#fbbf24" : "#fda4af",
                 }}
               >
                 {service.impactLevel}
@@ -175,23 +176,23 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
         </Table>
       </Column>
 
-      {/* Latest Timeline Event */}
+      {/* Latest Timeline Event & 44px Action CTA */}
       <Column
         style={{
-          backgroundColor: "#0f172a",
+          backgroundColor: "#151e1b",
           padding: 24,
-          borderRadius: 8,
-          border: { width: 1, style: "solid", color: "#1e293b" },
-          gap: 10,
+          borderRadius: 10,
+          border: { width: 1, style: "solid", color: "#283832" },
+          gap: 14,
         }}
       >
-        <Text style={{ fontSize: 14, color: "#94a3b8", textTransform: "uppercase" }}>
+        <Text style={{ fontSize: 12, color: "#2dd4bf", textTransform: "uppercase", fontWeight: 700 }}>
           Latest Action • {incident.timeline[incident.timeline.length - 1].timestamp}
         </Text>
-        <Heading level={2} style={{ fontSize: 16, color: "#f8fafc" }}>
+        <Heading level={2} style={{ fontSize: 18, color: "#e6f0ec" }}>
           {incident.timeline[incident.timeline.length - 1].title}
         </Heading>
-        <Text style={{ fontSize: 14, color: "#cbd5e1" }}>
+        <Text style={{ fontSize: 15, color: "#8aa399", lineHeight: 1.5 }}>
           {incident.timeline[incident.timeline.length - 1].description}
         </Text>
 
@@ -201,9 +202,9 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
             backgroundColor: btnBg,
             color: "#ffffff",
             borderRadius: 6,
-            padding: [12, 20],
+            padding: [12, 24],
             alignSelf: "start",
-            fontWeight: 600,
+            fontWeight: 700,
             fontSize: 14,
           }}
         >
@@ -212,12 +213,12 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
       </Column>
 
       {/* Verified Footer */}
-      <Column style={{ alignItems: "center", gap: 6, padding: [8, 0] }}>
-        <Text style={{ fontSize: 14, color: "#94a3b8", textAlign: "center" }}>
-          Incident Commander: <Span style={{ color: "#f8fafc", fontWeight: 600 }}>{incident.commander.name}</Span> ({incident.commander.role})
+      <Column style={{ alignItems: "center", gap: 4, padding: [8, 0] }}>
+        <Text style={{ fontSize: 13, color: "#8aa399", textAlign: "center" }}>
+          Incident Commander: <Span style={{ color: "#e6f0ec", fontWeight: 600 }}>{incident.commander.name}</Span> ({incident.commander.role})
         </Text>
-        <Text style={{ fontSize: 14, color: "#94a3b8", textAlign: "center" }}>
-          Audit Hash: <Span style={{ color: "#38bdf8" }}>{incident.compliance.auditHash.substring(0, 28)}...</Span>
+        <Text style={{ fontSize: 12, color: "#8aa399", textAlign: "center" }}>
+          Audit Hash: <Span style={{ color: "#2dd4bf" }}>{incident.compliance.auditHash.substring(0, 28)}...</Span>
         </Text>
       </Column>
     </EmailRoot>

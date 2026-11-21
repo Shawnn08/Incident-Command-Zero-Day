@@ -1,4 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  /* Official Hyper Elements & GitHub Soothing Slate Tokens */
+  --slate-canvas: #0d1117;
+  --slate-card: #161b22;
+  --slate-card-inner: #21262d;
+  --slate-border: #30363d;
+  --slate-border-muted: #21262d;
+  --slate-text: #e6edf3;
+  --slate-text-secondary: #8b949e;
+  --slate-text-muted: #6e7681;
+  --slate-accent: #38bdf8;
+  --slate-mint: #34d399;
+  --slate-coral: #f87171;
+  --slate-amber: #fbbf24;
+
+  /* Emil Kowalski & elayadesign Motion Tokens */
+  --ease-out-craft: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-hover: 200ms;
+  --duration-transition: 280ms;
+}
 
 * {
   box-sizing: border-box;
@@ -9,18 +30,48 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #06090e;
-  color: #f8fafc;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--slate-canvas);
+  color: var(--slate-text);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  font-family: inherit;
-  transition: all 0.15s ease-in-out;
+/* Atmospheric Calm Slate Grid Texture - Soft, zero glare */
+.calm-slate-background {
+  min-height: 100vh;
+  background-color: var(--slate-canvas);
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 65%),
+    linear-gradient(to right, rgba(48, 54, 61, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(48, 54, 61, 0.15) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
 }
 
-button:hover {
-  filter: brightness(1.1);
+/* Standardized Ergonomic 44px Button with Emil Kowalski Easing */
+button {
+  font-family: inherit;
+  transition: transform var(--duration-hover) var(--ease-out-craft),
+              opacity var(--duration-hover) var(--ease-out-craft),
+              background-color var(--duration-hover) var(--ease-out-craft),
+              border-color var(--duration-hover) var(--ease-out-craft);
+  outline: none;
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 2px var(--slate-canvas), 0 0 0 4px var(--slate-accent);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Accessible reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

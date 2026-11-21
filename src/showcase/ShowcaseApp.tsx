@@ -12,137 +12,156 @@ import {
 } from "lucide-react";
 import { activeP0Incident, resolvedIncident } from "../data/mockIncident";
 import type { IncidentManifest } from "../data/types";
-import IncidentEmail from "../templates/IncidentEmail";
-import IncidentWebPage from "../templates/IncidentWebPage";
-import IncidentAuditDoc from "../templates/IncidentAuditDoc";
-import IncidentSocialCard from "../templates/IncidentSocialCard";
+import EmailPreview from "./EmailPreview";
+import WebPagePreview from "./WebPagePreview";
+import AuditDocPreview from "./AuditDocPreview";
+import SocialCardPreview from "./SocialCardPreview";
+import { colorSuites } from "../theme/colorSuites";
 
-type ViewTab = "email" | "web" | "document" | "canvas";
+type ViewTab = "web" | "email" | "document" | "canvas";
 
 export default function ShowcaseApp() {
   const [incidentState, setIncidentState] = useState<"active" | "resolved">("active");
-  const [activeTab, setActiveTab] = useState<ViewTab>("email");
+  const [activeTab, setActiveTab] = useState<ViewTab>("web");
   const [isMobileView, setIsMobileView] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const currentIncident: IncidentManifest =
     incidentState === "active" ? activeP0Incident : resolvedIncident;
 
-  const handleCopyHtml = () => {
+  // Locked to the user's approved Natural Restorative Slate (Nordic Moss & Slate)
+  const currentTheme = colorSuites["moss-eucalyptus"];
+
+  const handleCopy = () => {
+    navigator.clipboard?.writeText(JSON.stringify(currentIncident, null, 2));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div style={{ minHeight: "100vh", backgroundColor: "#06090e", color: "#f8fafc", fontFamily: "Inter, sans-serif" }}>
-      {/* Top Navbar */}
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: currentTheme.canvasBg,
+        color: currentTheme.textPrimary,
+        fontFamily: "'Plus Jakarta Sans', sans-serif",
+        transition: "all 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
+      }}
+    >
+      {/* Top Navbar: Submission-Ready Executive Command Bar */}
       <header
         style={{
-          borderBottom: "1px solid #1e293b",
-          backgroundColor: "#0b0f19",
-          padding: "14px 24px",
+          borderBottom: "1px solid #283832",
+          backgroundColor: "#151e1b",
+          padding: "14px 28px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: 16,
+          boxShadow: "0 2px 12px rgba(0, 0, 0, 0.4)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <div
             style={{
-              backgroundColor: "#450a0a",
-              border: "1px solid #ef4444",
+              backgroundColor: "rgba(253, 164, 175, 0.12)",
+              border: "1px solid rgba(253, 164, 175, 0.3)",
               borderRadius: 6,
-              padding: "6px 10px",
+              padding: "8px 14px",
               display: "flex",
               alignItems: "center",
               gap: 8,
             }}
           >
-            <ShieldAlert size={18} color="#ef4444" />
-            <span style={{ fontWeight: 800, fontSize: 13, letterSpacing: "0.08em", color: "#f87171" }}>
+            <ShieldAlert size={19} color="#fda4af" />
+            <span style={{ fontWeight: 800, fontSize: 14, letterSpacing: "0.06em", color: "#fda4af", fontFamily: "'Space Mono', monospace" }}>
               INCIDENT COMMAND
             </span>
           </div>
-          <span style={{ color: "#64748b" }}>/</span>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "#cbd5e1" }}>
+          <span style={{ color: "#283832", fontSize: 18 }}>/</span>
+          <span style={{ fontSize: 16, fontWeight: 700, color: "#e6f0ec", letterSpacing: "-0.01em" }}>
             ZERO-DAY // {currentIncident.id}
           </span>
           <div
             style={{
-              backgroundColor: "#064e3b",
-              border: "1px solid #10b981",
+              backgroundColor: "rgba(110, 231, 183, 0.12)",
+              border: "1px solid rgba(110, 231, 183, 0.3)",
               borderRadius: 4,
-              padding: "2px 8px",
-              fontSize: 11,
+              padding: "4px 10px",
+              fontSize: 12,
               fontWeight: 700,
-              color: "#34d399",
+              color: "#6ee7b7",
+              fontFamily: "'Space Mono', monospace",
             }}
           >
-            HYPER ELEMENTS VERIFIED: 0 ERRORS
+            HYPER ELEMENTS VERIFIED • 0 ERRORS
           </div>
         </div>
 
-        {/* State Toggle: Active Outage vs Resolved */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: 12, color: "#94a3b8" }}>Incident Scenario:</span>
+        {/* State Toggle: Active Outage vs Resolved (Ergonomic 44px Height) */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span style={{ fontSize: 13, color: "#8aa399", fontWeight: 600 }}>Scenario:</span>
           <div
             style={{
-              backgroundColor: "#0f172a",
-              border: "1px solid #1e293b",
-              borderRadius: 6,
-              padding: 3,
+              backgroundColor: "#1e2a26",
+              border: "1px solid #283832",
+              borderRadius: 8,
+              padding: 4,
               display: "flex",
-              gap: 4,
+              gap: 6,
             }}
           >
             <button
               onClick={() => setIncidentState("active")}
               style={{
-                backgroundColor: incidentState === "active" ? "#450a0a" : "transparent",
-                color: incidentState === "active" ? "#f87171" : "#94a3b8",
-                border: incidentState === "active" ? "1px solid #ef4444" : "none",
-                borderRadius: 4,
-                padding: "6px 12px",
-                fontSize: 12,
-                fontWeight: 600,
+                backgroundColor: incidentState === "active" ? "rgba(253, 164, 175, 0.18)" : "transparent",
+                color: incidentState === "active" ? "#fda4af" : "#8aa399",
+                border: incidentState === "active" ? "1px solid rgba(253, 164, 175, 0.4)" : "1px solid transparent",
+                borderRadius: 6,
+                padding: "8px 16px",
+                fontSize: 13,
+                fontWeight: 700,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: 6,
+                gap: 8,
+                minHeight: 40,
+                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
-              <AlertTriangle size={14} /> P0 Active Outage
+              <AlertTriangle size={15} /> P0 Active Outage
             </button>
             <button
               onClick={() => setIncidentState("resolved")}
               style={{
-                backgroundColor: incidentState === "resolved" ? "#064e3b" : "transparent",
-                color: incidentState === "resolved" ? "#34d399" : "#94a3b8",
-                border: incidentState === "resolved" ? "1px solid #10b981" : "none",
-                borderRadius: 4,
-                padding: "6px 12px",
-                fontSize: 12,
-                fontWeight: 600,
+                backgroundColor: incidentState === "resolved" ? "rgba(110, 231, 183, 0.18)" : "transparent",
+                color: incidentState === "resolved" ? "#6ee7b7" : "#8aa399",
+                border: incidentState === "resolved" ? "1px solid rgba(110, 231, 183, 0.4)" : "1px solid transparent",
+                borderRadius: 6,
+                padding: "8px 16px",
+                fontSize: 13,
+                fontWeight: 700,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: 6,
+                gap: 8,
+                minHeight: 40,
+                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
               }}
             >
-              <CheckCircle2 size={14} /> P0 Mitigated &amp; Resolved
+              <CheckCircle2 size={15} /> P0 Mitigated &amp; Restored
             </button>
           </div>
         </div>
       </header>
 
-      {/* Format Selector Bar */}
+      {/* Format Selector Bar: Clean 4 Core Submission Deliverables */}
       <div
         style={{
-          borderBottom: "1px solid #1e293b",
-          backgroundColor: "#090d16",
-          padding: "10px 24px",
+          borderBottom: "1px solid #283832",
+          backgroundColor: "#111816",
+          padding: "10px 28px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -151,127 +170,146 @@ export default function ShowcaseApp() {
         }}
       >
         {/* The 4 Outputs Tabs */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <button
-            onClick={() => setActiveTab("email")}
-            style={{
-              backgroundColor: activeTab === "email" ? "#1e293b" : "transparent",
-              color: activeTab === "email" ? "#ffffff" : "#94a3b8",
-              border: activeTab === "email" ? "1px solid #38bdf8" : "1px solid transparent",
-              borderRadius: 6,
-              padding: "8px 14px",
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <Mail size={16} color={activeTab === "email" ? "#38bdf8" : "#94a3b8"} />
-            1. Email Dispatch (<code style={{ fontSize: 11, color: "#38bdf8" }}>&lt;Email&gt;</code>)
-          </button>
-
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
           <button
             onClick={() => setActiveTab("web")}
             style={{
-              backgroundColor: activeTab === "web" ? "#1e293b" : "transparent",
-              color: activeTab === "web" ? "#ffffff" : "#94a3b8",
-              border: activeTab === "web" ? "1px solid #38bdf8" : "1px solid transparent",
+              backgroundColor: activeTab === "web" ? "#1e2a26" : "transparent",
+              color: activeTab === "web" ? "#e6f0ec" : "#8aa399",
+              border: `1px solid ${activeTab === "web" ? "#2dd4bf" : "transparent"}`,
               borderRadius: 6,
-              padding: "8px 14px",
-              fontSize: 13,
-              fontWeight: 600,
+              padding: "0 18px",
+              minHeight: 44,
+              height: 44,
+              fontSize: 14,
+              fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
+              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
-            <Globe size={16} color={activeTab === "web" ? "#38bdf8" : "#94a3b8"} />
-            2. Live Status Portal (<code style={{ fontSize: 11, color: "#38bdf8" }}>&lt;Page&gt;</code>)
+            <Globe size={17} color={activeTab === "web" ? "#2dd4bf" : "#8aa399"} />
+            1. Live Status Portal (<code style={{ fontSize: 12, color: activeTab === "web" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Page&gt;</code>)
+          </button>
+
+          <button
+            onClick={() => setActiveTab("email")}
+            style={{
+              backgroundColor: activeTab === "email" ? "#1e2a26" : "transparent",
+              color: activeTab === "email" ? "#e6f0ec" : "#8aa399",
+              border: `1px solid ${activeTab === "email" ? "#2dd4bf" : "transparent"}`,
+              borderRadius: 6,
+              padding: "0 18px",
+              minHeight: 44,
+              height: 44,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            <Mail size={17} color={activeTab === "email" ? "#2dd4bf" : "#8aa399"} />
+            2. Email Dispatch (<code style={{ fontSize: 12, color: activeTab === "email" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Email&gt;</code>)
           </button>
 
           <button
             onClick={() => setActiveTab("document")}
             style={{
-              backgroundColor: activeTab === "document" ? "#1e293b" : "transparent",
-              color: activeTab === "document" ? "#ffffff" : "#94a3b8",
-              border: activeTab === "document" ? "1px solid #38bdf8" : "1px solid transparent",
+              backgroundColor: activeTab === "document" ? "#1e2a26" : "transparent",
+              color: activeTab === "document" ? "#e6f0ec" : "#8aa399",
+              border: `1px solid ${activeTab === "document" ? "#2dd4bf" : "transparent"}`,
               borderRadius: 6,
-              padding: "8px 14px",
-              fontSize: 13,
-              fontWeight: 600,
+              padding: "0 18px",
+              minHeight: 44,
+              height: 44,
+              fontSize: 14,
+              fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
+              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
-            <FileText size={16} color={activeTab === "document" ? "#38bdf8" : "#94a3b8"} />
-            3. Formal RCA PDF (<code style={{ fontSize: 11, color: "#38bdf8" }}>&lt;Document&gt;</code>)
+            <FileText size={17} color={activeTab === "document" ? "#2dd4bf" : "#8aa399"} />
+            3. Formal RCA Report (<code style={{ fontSize: 12, color: activeTab === "document" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Document&gt;</code>)
           </button>
 
           <button
             onClick={() => setActiveTab("canvas")}
             style={{
-              backgroundColor: activeTab === "canvas" ? "#1e293b" : "transparent",
-              color: activeTab === "canvas" ? "#ffffff" : "#94a3b8",
-              border: activeTab === "canvas" ? "1px solid #38bdf8" : "1px solid transparent",
+              backgroundColor: activeTab === "canvas" ? "#1e2a26" : "transparent",
+              color: activeTab === "canvas" ? "#e6f0ec" : "#8aa399",
+              border: `1px solid ${activeTab === "canvas" ? "#2dd4bf" : "transparent"}`,
               borderRadius: 6,
-              padding: "8px 14px",
+              padding: "0 18px",
+              minHeight: 44,
+              height: 44,
+              fontSize: 14,
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            <ImageIcon size={17} color={activeTab === "canvas" ? "#2dd4bf" : "#8aa399"} />
+            4. Resolution Badge (<code style={{ fontSize: 12, color: activeTab === "canvas" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Canvas&gt;</code>)
+          </button>
+        </div>
+
+        {/* Action Controls (Ergonomic 44px Height) */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {activeTab === "email" && (
+            <button
+              onClick={() => setIsMobileView(!isMobileView)}
+              style={{
+                backgroundColor: "#1e2a26",
+                color: isMobileView ? "#2dd4bf" : "#8aa399",
+                border: "1px solid #283832",
+                borderRadius: 6,
+                padding: "0 16px",
+                minHeight: 44,
+                height: 44,
+                fontSize: 13,
+                fontWeight: 600,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
+              <Smartphone size={15} /> {isMobileView ? "Mobile (375px)" : "Desktop (600px)"}
+            </button>
+          )}
+
+          <button
+            onClick={handleCopy}
+            style={{
+              backgroundColor: "#1e2a26",
+              color: "#e6f0ec",
+              border: "1px solid #283832",
+              borderRadius: 6,
+              padding: "0 18px",
+              minHeight: 44,
+              height: 44,
               fontSize: 13,
               fontWeight: 600,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
+              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
-            <ImageIcon size={16} color={activeTab === "canvas" ? "#38bdf8" : "#94a3b8"} />
-            4. Resolution Badge (<code style={{ fontSize: 11, color: "#38bdf8" }}>&lt;Canvas&gt;</code>)
-          </button>
-        </div>
-
-        {/* Action Controls */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          {activeTab === "email" && (
-            <button
-              onClick={() => setIsMobileView(!isMobileView)}
-              style={{
-                backgroundColor: isMobileView ? "#1e293b" : "#0f172a",
-                color: isMobileView ? "#38bdf8" : "#94a3b8",
-                border: "1px solid #334155",
-                borderRadius: 6,
-                padding: "6px 12px",
-                fontSize: 12,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              <Smartphone size={14} /> {isMobileView ? "Mobile (375px)" : "Desktop (600px)"}
-            </button>
-          )}
-
-          <button
-            onClick={handleCopyHtml}
-            style={{
-              backgroundColor: "#0f172a",
-              color: "#f8fafc",
-              border: "1px solid #334155",
-              borderRadius: 6,
-              padding: "6px 12px",
-              fontSize: 12,
-              fontWeight: 500,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
-          >
-            <Copy size={14} /> {copied ? "Copied Source!" : "Copy Output"}
+            <Copy size={15} /> {copied ? "Manifest Copied!" : "Copy Manifest JSON"}
           </button>
         </div>
       </div>
@@ -297,19 +335,42 @@ export default function ShowcaseApp() {
                 ? "980px"
                 : activeTab === "document"
                 ? "840px"
-                : "1240px",
-            transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.75)",
+                : "1200px",
+            maxWidth: "100%",
+            transition: "width 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
+            boxShadow: "0 16px 40px rgba(0, 0, 0, 0.6)",
             borderRadius: 12,
-            border: "1px solid #1e293b",
+            border: "1px solid #283832",
             overflow: "hidden",
-            backgroundColor: activeTab === "document" ? "#ffffff" : "#0b0f19",
+            backgroundColor: "#0f1513",
           }}
         >
-          {activeTab === "email" && <IncidentEmail incident={currentIncident} />}
-          {activeTab === "web" && <IncidentWebPage incident={currentIncident} />}
-          {activeTab === "document" && <IncidentAuditDoc incident={currentIncident} />}
-          {activeTab === "canvas" && <IncidentSocialCard incident={currentIncident} />}
+          {activeTab === "web" && (
+            <WebPagePreview
+              incident={currentIncident}
+              typography="option-c"
+              suite="moss-eucalyptus"
+            />
+          )}
+          {activeTab === "email" && (
+            <EmailPreview
+              incident={currentIncident}
+              typography="option-c"
+              suite="moss-eucalyptus"
+            />
+          )}
+          {activeTab === "document" && (
+            <AuditDocPreview
+              incident={currentIncident}
+              typography="option-c"
+            />
+          )}
+          {activeTab === "canvas" && (
+            <SocialCardPreview
+              incident={currentIncident}
+              typography="option-c"
+            />
+          )}
         </div>
       </main>
     </div>

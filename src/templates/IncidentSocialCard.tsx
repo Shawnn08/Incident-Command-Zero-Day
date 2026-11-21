@@ -19,8 +19,9 @@ const CanvasRoot = Canvas as any;
 
 export default function IncidentSocialCard({ incident = resolvedIncident }: IncidentSocialCardProps) {
   const isResolved = incident.status === "RESOLVED";
-  const statusColor = isResolved ? "#10b981" : "#ef4444";
-  const statusBg = isResolved ? "#064e3b" : "#450a0a";
+  const statusColor = isResolved ? "#6ee7b7" : "#fda4af";
+  const statusBg = isResolved ? "rgba(110, 231, 183, 0.14)" : "rgba(253, 164, 175, 0.14)";
+  const statusBorder = isResolved ? "rgba(110, 231, 183, 0.35)" : "rgba(253, 164, 175, 0.35)";
 
   return (
     <CanvasRoot
@@ -37,20 +38,20 @@ export default function IncidentSocialCard({ incident = resolvedIncident }: Inci
     >
       {/* Top Bar: Brand, ID, Status Pill */}
       <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-        <Row style={{ alignItems: "center", gap: 12 }}>
+        <Row style={{ alignItems: "center", gap: 14 }}>
           <Column
             style={{
-              backgroundColor: "#1e293b",
-              padding: [8, 14],
+              backgroundColor: "#151e1b",
+              padding: [8, 16],
               borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#334155" },
+              border: { width: 1, style: "solid", color: "#283832" },
             }}
           >
-            <Text style={{ fontSize: 14, fontWeight: 700, color: "#38bdf8", letterSpacing: 1 }}>
+            <Text style={{ fontSize: 15, fontWeight: 700, color: "#2dd4bf", letterSpacing: 1 }}>
               {incident.id}
             </Text>
           </Column>
-          <Text style={{ fontSize: 16, color: "#94a3b8", fontWeight: 600 }}>
+          <Text style={{ fontSize: 16, color: "#8aa399", fontWeight: 600 }}>
             {incident.organization} • Cloud Security &amp; Network Operations
           </Text>
         </Row>
@@ -58,9 +59,9 @@ export default function IncidentSocialCard({ incident = resolvedIncident }: Inci
         <Column
           style={{
             backgroundColor: statusBg,
-            padding: [8, 18],
+            padding: [8, 20],
             borderRadius: 6,
-            border: { width: 1, style: "solid", color: statusColor },
+            border: { width: 1, style: "solid", color: statusBorder },
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: 800, color: statusColor, textTransform: "uppercase", letterSpacing: 1 }}>
@@ -71,10 +72,10 @@ export default function IncidentSocialCard({ incident = resolvedIncident }: Inci
 
       {/* Main Title & Hero Announcement */}
       <Column style={{ gap: 16 }}>
-        <Heading level={1} style={{ fontSize: 44, color: "#ffffff", fontWeight: 800, lineHeight: 1.2 }}>
+        <Heading level={1} style={{ fontSize: 46, color: "#e6f0ec", fontWeight: 800, lineHeight: 1.25 }}>
           {isResolved ? "Incident Mitigated & Systems Restored" : incident.title}
         </Heading>
-        <Text style={{ fontSize: 20, color: "#cbd5e1", lineHeight: 1.5, maxWidth: 1000 }}>
+        <Text style={{ fontSize: 20, color: "#8aa399", lineHeight: 1.6, maxWidth: 1000 }}>
           {incident.summary}
         </Text>
       </Column>
@@ -84,72 +85,72 @@ export default function IncidentSocialCard({ incident = resolvedIncident }: Inci
         <Column
           style={{
             flex: 1,
-            backgroundColor: "#0f172a",
+            backgroundColor: "#151e1b",
             padding: 24,
             borderRadius: 8,
-            border: { width: 1, style: "solid", color: "#1e293b" },
+            border: { width: 1, style: "solid", color: "#283832" },
             gap: 6,
           }}
         >
-          <Text style={{ fontSize: 13, color: "#94a3b8", textTransform: "uppercase", fontWeight: 600 }}>
+          <Text style={{ fontSize: 13, color: "#8aa399", textTransform: "uppercase", fontWeight: 600 }}>
             Mean Time To Resolve
           </Text>
-          <Heading level={2} style={{ fontSize: 32, color: statusColor, fontWeight: 800 }}>
+          <Heading level={2} style={{ fontSize: 34, color: statusColor, fontWeight: 800 }}>
             {incident.durationMinutes} min
           </Heading>
-          <Text style={{ fontSize: 13, color: "#64748b" }}>Detection to Mitigation</Text>
+          <Text style={{ fontSize: 13, color: "#5e776e" }}>Detection to Mitigation</Text>
         </Column>
 
         <Column
           style={{
             flex: 1,
-            backgroundColor: "#0f172a",
+            backgroundColor: "#151e1b",
             padding: 24,
             borderRadius: 8,
-            border: { width: 1, style: "solid", color: "#1e293b" },
+            border: { width: 1, style: "solid", color: "#283832" },
             gap: 6,
           }}
         >
-          <Text style={{ fontSize: 13, color: "#94a3b8", textTransform: "uppercase", fontWeight: 600 }}>
+          <Text style={{ fontSize: 13, color: "#8aa399", textTransform: "uppercase", fontWeight: 600 }}>
             Global Edge Status
           </Text>
-          <Heading level={2} style={{ fontSize: 32, color: "#f8fafc", fontWeight: 800 }}>
+          <Heading level={2} style={{ fontSize: 34, color: "#e6f0ec", fontWeight: 800 }}>
             {incident.metrics.totalPoPs} / {incident.metrics.totalPoPs} PoPs
           </Heading>
-          <Text style={{ fontSize: 13, color: "#64748b" }}>100% Convergence</Text>
+          <Text style={{ fontSize: 13, color: "#5e776e" }}>100% Convergence</Text>
         </Column>
 
         <Column
           style={{
             flex: 1,
-            backgroundColor: "#0f172a",
+            backgroundColor: "#151e1b",
             padding: 24,
             borderRadius: 8,
-            border: { width: 1, style: "solid", color: "#1e293b" },
+            border: { width: 1, style: "solid", color: "#283832" },
             gap: 6,
           }}
         >
-          <Text style={{ fontSize: 13, color: "#94a3b8", textTransform: "uppercase", fontWeight: 600 }}>
+          <Text style={{ fontSize: 13, color: "#8aa399", textTransform: "uppercase", fontWeight: 600 }}>
             Packet Loss Baseline
           </Text>
-          <Heading level={2} style={{ fontSize: 32, color: "#34d399", fontWeight: 800 }}>
+          <Heading level={2} style={{ fontSize: 34, color: "#6ee7b7", fontWeight: 800 }}>
             0.00%
           </Heading>
-          <Text style={{ fontSize: 13, color: "#64748b" }}>Transit Stabilized</Text>
+          <Text style={{ fontSize: 13, color: "#5e776e" }}>Transit Stabilized</Text>
         </Column>
       </Row>
 
-      <Divider style={{ borderTop: { width: 1, style: "solid", color: "#1e293b" } }} />
+      <Divider style={{ borderTop: { width: 1, style: "solid", color: "#283832" } }} />
 
       {/* Footer Info & Verification Bar */}
       <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-        <Text style={{ fontSize: 14, color: "#64748b" }}>
-          Incident Commander: <Span style={{ color: "#f8fafc", fontWeight: 600 }}>{incident.commander.name}</Span>
+        <Text style={{ fontSize: 14, color: "#8aa399" }}>
+          Incident Commander: <Span style={{ color: "#e6f0ec", fontWeight: 600 }}>{incident.commander.name}</Span>
         </Text>
-        <Text style={{ fontSize: 14, color: "#64748b" }}>
-          Audit SHA256: <Span style={{ color: "#38bdf8", fontFamily: "monospace" }}>{incident.compliance.auditHash.substring(0, 36)}...</Span>
+        <Text style={{ fontSize: 14, color: "#8aa399" }}>
+          Audit SHA256: <Span style={{ color: "#2dd4bf", fontFamily: "monospace" }}>{incident.compliance.auditHash.substring(0, 36)}...</Span>
         </Text>
-        <Text style={{ fontSize: 14, color: "#10b981", fontWeight: 600 }}>
+        <Text style={{ fontSize: 14, color: "#6ee7b7", fontWeight: 700 }}>
           [CERTIFIED] SOC2 Type II Certified
         </Text>
       </Row>

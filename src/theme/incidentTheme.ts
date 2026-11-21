@@ -2,63 +2,94 @@ import { defineTheme } from "@hyper-elements/react";
 
 export const incidentTheme = defineTheme({
   colors: {
-    background: "#0b0f19",
-    foreground: "#f8fafc",
-    primary: "#ef4444",
+    background: "#0f1513",
+    foreground: "#e6f0ec",
+    primary: "#be123c",
     primaryForeground: "#ffffff",
-    muted: "#94a3b8",
-    border: "#1e293b",
+    muted: "#8aa399",
+    border: "#283832",
   },
   formats: {
     document: {
       colors: {
-        background: "#ffffff",
-        foreground: "#0f172a",
-        border: "#e2e8f0",
+        background: "#0f1513",
+        foreground: "#e6f0ec",
+        border: "#283832",
+      },
+    },
+    email: {
+      colors: {
+        background: "#0f1513",
+        foreground: "#e6f0ec",
+        border: "#283832",
+      },
+    },
+    page: {
+      colors: {
+        background: "#0f1513",
+        foreground: "#e6f0ec",
+        border: "#283832",
+      },
+    },
+    canvas: {
+      colors: {
+        background: "#0f1513",
+        foreground: "#e6f0ec",
+        border: "#283832",
       },
     },
   },
   fonts: {
-    body: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-    heading: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    body: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    heading: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   },
   elements: {
     Heading: {
       by: {
         level: {
-          1: { fontSize: 22, mobile: { fontSize: 19 }, fontWeight: 700 },
-          2: { fontSize: 16, mobile: { fontSize: 15 }, fontWeight: 600 },
-          3: { fontSize: 13, fontWeight: 600 },
+          1: { fontSize: 30, mobile: { fontSize: 24 }, fontWeight: 700 },
+          2: { fontSize: 24, mobile: { fontSize: 18 }, fontWeight: 600 },
+          3: { fontSize: 20, mobile: { fontSize: 16 }, fontWeight: 600 },
+          4: { fontSize: 18, fontWeight: 600 },
+          5: { fontSize: 16, fontWeight: 600 },
+          6: { fontSize: 14, fontWeight: 600 },
         },
       },
     },
     Button: {
       borderRadius: 6,
       padding: [10, 18],
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 600,
-      hover: { backgroundColor: "#dc2626" },
+      hover: { backgroundColor: "#e11d48" },
     },
   },
   styles: {
     card: {
-      backgroundColor: "#0f172a",
-      padding: 20,
-      borderRadius: 8,
-      border: { width: 1, style: "solid", color: "#1e293b" },
-      gap: 12,
+      backgroundColor: "#151e1b",
+      padding: 24,
+      borderRadius: 10,
+      border: { width: 1, style: "solid", color: "#283832" },
+      gap: 16,
+    },
+    cardInner: {
+      backgroundColor: "#1e2a26",
+      padding: 16,
+      borderRadius: 6,
+      border: { width: 1, style: "solid", color: "#283832" },
+      gap: 8,
     },
     badgeCritical: {
-      backgroundColor: "#450a0a",
+      backgroundColor: "rgba(253, 164, 175, 0.12)",
       padding: [4, 10],
       borderRadius: 4,
-      border: { width: 1, style: "solid", color: "#ef4444" },
+      border: { width: 1, style: "solid", color: "rgba(253, 164, 175, 0.3)" },
     },
     badgeSuccess: {
-      backgroundColor: "#064e3b",
+      backgroundColor: "rgba(110, 231, 183, 0.12)",
       padding: [4, 10],
       borderRadius: 4,
-      border: { width: 1, style: "solid", color: "#10b981" },
+      border: { width: 1, style: "solid", color: "rgba(110, 231, 183, 0.3)" },
     },
   },
 });
