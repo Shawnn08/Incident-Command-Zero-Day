@@ -3,7 +3,7 @@
 
 [![Built with Hyper Elements](https://img.shields.io/badge/Built%20with-Hyper%20Elements-2dd4bf?style=for-the-badge&logo=react)](https://hyperelements.dev)
 [![Status: 0 Errors, 0 Warnings](https://img.shields.io/badge/Hyper%20Elements%20CLI-0%20Errors%20%7C%200%20Warnings-6ee7b7?style=for-the-badge)](https://hyperelements.dev)
-[![Theme: Nordic Moss & Slate](https://img.shields.io/badge/Palette-Nordic%20Moss%20%26%20Slate-2dd4bf?style=for-the-badge)](https://hyperelements.dev)
+[![Palette: Natural Restorative Slate](https://img.shields.io/badge/Palette-Nordic%20Moss%20%26%20Slate-2dd4bf?style=for-the-badge)](https://hyperelements.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-38bdf8?style=for-the-badge)](LICENSE)
 
 > **Submission for the Unlayer Hyper Elements Template Challenge ($500 Prize Pool)**  
@@ -13,16 +13,62 @@
 
 ## 🎯 The Real-World Problem
 
-When tier-1 cloud infrastructure suffers an outage—such as an **RFC 7908 Anycast BGP route leak, transit failure, or edge partition**—site reliability engineering (SRE) and incident response teams face a severe communications breakdown across disconnected channels:
+When tier-1 cloud infrastructure suffers an outage—such as an **RFC 7908 Anycast BGP route leak, transit partition, or edge failure**—site reliability engineering (SRE) teams face a catastrophic communications breakdown across disconnected tools:
 
-1. **The Customer SLA Email Problem**: Enterprise customers demand immediate email alerts. But standard HTML emails break on corporate Outlook and Gmail clients, turning tables and badges into broken layouts.
-2. **The Status Portal Problem**: Web status dashboards are frequently updated manually in separate consoles, leading to out-of-sync timelines and conflicting packet loss statistics.
-3. **The Formal Compliance Problem**: SLA agreements and enterprise auditors require a **formal 2-page Root Cause Analysis (RCA) Post-Mortem PDF** with a 5-Whys diagnostic cascade, Jira action items, and cryptographic executive signatures for SOC2 Type II and ISO-27001 audit trails.
-4. **The War-Room & Social Announcement Problem**: Technical teams, status bots, and DevRel need an authoritative, high-contrast resolution card for Discord, Slack, and status announcements.
+* **Customer SLA Emails** break on Outlook and mobile clients, garbling metrics and layout tables.
+* **Status Portals** are edited manually in separate consoles, showing out-of-sync timelines and conflicting packet loss statistics.
+* **Formal Compliance Audits** require an executive 2-page Root Cause Analysis (RCA) post-mortem PDF with a 5-Whys diagnostic cascade, Jira action items, and cryptographic signatures for SOC2 Type II compliance.
+* **War-Room & Social Announcements** require an instant, high-contrast resolution card for Discord, Slack, and status channels.
 
-Historically, organizations maintain **four separate codebases and disparate tools** to generate these assets. 
+Historically, organizations maintain **four disparate systems** to produce these artifacts. **INCIDENT COMMAND // ZERO-DAY** replaces this fragmentation with **a single typed incident manifest (`incident_p0.json` / `types.ts`)** that compiles deterministically into all four outputs with **0 errors and 0 warnings**.
 
-**INCIDENT COMMAND // ZERO-DAY** eliminates this fragmentation by establishing **a single typed data manifest (`incident_p0.json` / `types.ts`)** that compiles deterministically into all four mission-critical outputs using Hyper Elements.
+---
+
+## 📸 Visual Showcase & Gallery (Both Scenarios)
+
+The live interactive application simulates **both operational states** via a single click:
+1. 🔴 **P0 Active Outage**: Critical crisis state (42.8% packet drop, ROV bypassed, transit de-peered).
+2. 🟢 **P0 Mitigated & Restored**: Full convergence (0% packet drop, ROV enforced, MTTR 42m, signed compliance hash).
+
+---
+
+### 1. Live Status & War-Room Portal (`<Page width={940}>`)
+*Real-time war room dashboard featuring live Anycast BGP route leak topology map, blast radius telemetry matrix, and chronological mitigation log.*
+
+#### 🔴 Scenario A: Active P0 Outage
+![Live Status Portal - Active Outage](docs/screenshots/01-live-status-portal-active.png)
+
+#### 🟢 Scenario B: Mitigated & Restored
+![Live Status Portal - Mitigated & Restored](docs/screenshots/05-live-status-portal-mitigated.png)
+
+---
+
+### 2. Emergency Customer & Stakeholder SLA Dispatch (`<Email width={600}>`)
+*Bulletproof, table-safe HTML dispatch engineered for Microsoft Outlook, Gmail, and Apple Mail. Includes toned-down telemetry graphics and 44px touch targets.*
+
+| 🔴 Active Outage (Desktop 600px) | 🟢 Mitigated (Desktop 600px) | 📱 Responsive Mobile (375px) |
+| :---: | :---: | :---: |
+| ![Email Active Desktop](docs/screenshots/02-email-dispatch-active.png) | ![Email Mitigated Desktop](docs/screenshots/06-email-dispatch-mitigated.png) | ![Email Active Mobile](docs/screenshots/02b-email-mobile-active.png) |
+
+---
+
+### 3. Formal 2-Page Root Cause Analysis (RCA) Dossier (`<Document size="A4">`)
+*Print-ready, paginated enterprise post-mortem whitepaper featuring `<PageHeader>`, `<PageFooter>`, `<PageBreak>`, 5-Whys forensic table, Jira remediation items, and executive cryptographic validation.*
+
+#### 🔴 Scenario A: Incident Active Investigation (Full 2-Page Document)
+![Formal RCA Document - Active](docs/screenshots/03-formal-rca-document-active.png)
+
+#### 🟢 Scenario B: Complete Post-Mortem Sign-Off (Full 2-Page Document)
+![Formal RCA Document - Mitigated](docs/screenshots/07-formal-rca-document-mitigated.png)
+
+---
+
+### 4. Resolution & Social Announcement Badge (`<Canvas width={1200} height={630}>`)
+*High-contrast 1200×630 OpenGraph graphic generated programmatically via Hyper Elements Canvas engine (`renderImage()`) for instant Slack, Discord, and social updates.*
+
+| 🔴 Active Crisis Alert Card | 🟢 Mitigated Resolution Badge |
+| :---: | :---: |
+| ![Resolution Badge Active](docs/screenshots/04-resolution-badge-canvas-active.png) | ![Resolution Badge Mitigated](docs/screenshots/08-resolution-badge-canvas-mitigated.png) |
 
 ---
 
@@ -62,63 +108,24 @@ Historically, organizations maintain **four separate codebases and disparate too
 
 ---
 
-## 📸 Output Gallery (Screenshots)
-
-### 1. Live Status Portal (`<Page>`)
-*High-availability web status dashboard displaying real-time Anycast BGP route leak diagnostics, multi-region degradation matrix, and mitigation milestones.*
-
-![Live Status Portal](docs/screenshots/01-live-status-portal.png)
-
----
-
-### 2. Emergency Customer & Stakeholder SLA Dispatch (`<Email>`)
-*Bulletproof HTML email optimized for mobile and desktop corporate inboxes. Features toned-down Pine-Slate graph container and 44px ergonomic buttons.*
-
-| Desktop View (600px) | Mobile View (375px) |
-| :---: | :---: |
-| ![Email Desktop](docs/screenshots/02-email-dispatch.png) | ![Email Mobile](docs/screenshots/02b-email-mobile.png) |
-
----
-
-### 3. Formal 2-Page RCA Post-Mortem Report (`<Document>`)
-*Print-ready paginated enterprise dossier featuring 5-Whys diagnostic cascade, corrective Jira actions, and executive cryptographic validation.*
-
-![Formal RCA Document](docs/screenshots/03-formal-rca-document.png)
-
----
-
-### 4. Resolution Badge (`<Canvas>`)
-*1200×630 OpenGraph graphic generated programmatically via Hyper Elements Canvas engine with verified MTTR and zero-packet-loss convergence.*
-
-![Resolution Badge](docs/screenshots/04-resolution-badge-canvas.png)
-
----
-
-### 5. Reactive Scenario Simulation: P0 Outage vs Mitigated
-*1-click state toggle dynamically switches telemetry from Active P0 Outage (42.8% packet loss, ROV bypassed) to Mitigated & Restored (100% convergence, ROV active).*
-
-![Mitigated Scenario](docs/screenshots/05-mitigated-resolution.png)
-
----
-
 ## 🎨 Design Engineering & Craft Standards
 
-This template follows strict senior design engineering principles adapted from [elayadesign/ai-design-skills](https://github.com/elayadesign/ai-design-skills) and [meodai/color-expert](https://github.com/meodai/skill.color-expert):
+This template strictly follows senior design engineering craft guidelines adapted from [elayadesign/ai-design-skills](https://github.com/elayadesign/ai-design-skills) and [meodai/color-expert](https://github.com/meodai/skill.color-expert):
 
 ### 1. Natural Restorative Slate Palette
-Eliminates blinding stark white backgrounds (`#ffffff`) and neon gamer glare:
-- **Base Canvas**: `#0f1513` (Deep pine slate, gentle on the retina during late-night incident response)
+Eliminates blinding stark white backgrounds (`#ffffff`) and neon glare:
+- **Base Canvas**: `#0f1513` (Deep pine slate, gentle on the eyes during high-stress incident response)
 - **Elevated Cards**: `#151e1b` (Calm matte surface)
 - **Nested Subsystems**: `#1e2a26` (Inner cards & telemetry map containers)
 - **Delicate Borders**: `#283832` (Subtle 1px hairlines)
 - **Primary Typography**: `#e6f0ec` (Soft off-white with ~14:1 AAA contrast)
 - **Secondary Copy**: `#8aa399` (Muted readable slate)
 - **Restorative Accent**: `#2dd4bf` (Calming mint/teal for technical telemetry)
-- **P0 Status Badges**: Translucent ghost pills (`rgba(253, 164, 175, 0.14)`) instead of aggressive loud fills.
+- **P0 Status Badges**: Translucent ghost pills (`rgba(253, 164, 175, 0.14)`) instead of loud opaque fills.
 
 ### 2. Strict Typography Hierarchy (Option C Locked)
 - **Font Pairing**: `Plus Jakarta Sans` (UI clarity & humanist geometry) paired with `Space Mono` (timestamps, RFC codes, SHA-256 hashes).
-- **Tailwind Type Scale Snapping**:
+- **Type Scale Snapping**:
   - Hero Headings: `32px` / `40px` line-height
   - Section Headings (H2): `20px` / `28px`
   - Metric Numbers: `30px–34px` bold Space Mono
@@ -169,7 +176,7 @@ npm run dev
 ```
 Open [http://localhost:5173](http://localhost:5173) in your browser:
 * Switch seamlessly between **`<Page>`**, **`<Email>`**, **`<Document>`**, and **`<Canvas>`**.
-* Toggle scenarios between **P0 Active Outage** and **P0 Mitigated & Restored**.
+* Toggle scenarios between **🔴 P0 Active Outage** and **🟢 P0 Mitigated & Restored**.
 * Test responsive viewports with the **Desktop (600px) / Mobile (375px)** email switcher.
 * Click **Copy Manifest JSON** to inspect the underlying incident data model.
 
@@ -190,37 +197,40 @@ npm run build
 ```
 incident-command-zero-day/
 ├── docs/
-│   └── screenshots/                 # 2x Retina screenshots of all 4 formats
-│       ├── 01-live-status-portal.png
-│       ├── 02-email-dispatch.png
-│       ├── 02b-email-mobile.png
-│       ├── 03-formal-rca-document.png
-│       ├── 04-resolution-badge-canvas.png
-│       └── 05-mitigated-resolution.png
+│   └── screenshots/                     # Full 2x Retina screenshots (both scenarios)
+│       ├── 01-live-status-portal-active.png
+│       ├── 02-email-dispatch-active.png
+│       ├── 02b-email-mobile-active.png
+│       ├── 03-formal-rca-document-active.png
+│       ├── 04-resolution-badge-canvas-active.png
+│       ├── 05-live-status-portal-mitigated.png
+│       ├── 06-email-dispatch-mitigated.png
+│       ├── 07-formal-rca-document-mitigated.png
+│       └── 08-resolution-badge-canvas-mitigated.png
 ├── scripts/
-│   └── capture-screenshots.mjs      # Automated Puppeteer screenshot engine
+│   └── capture-screenshots.mjs          # Automated Puppeteer fullPage capture engine
 ├── src/
 │   ├── data/
-│   │   ├── types.ts                 # Strongly-typed Incident Manifest schema
-│   │   └── mockIncident.ts          # Authentic P0 Incident: "INC-8492 // BGP Route Leak"
+│   │   ├── types.ts                     # Strongly-typed Incident Manifest schema
+│   │   └── mockIncident.ts              # Authentic P0 Incident: "INC-8492 // BGP Route Leak"
 │   ├── theme/
-│   │   ├── colorSuites.ts           # Natural Restorative Slate & calibrated palettes
-│   │   └── incidentTheme.ts         # Hyper Elements defineTheme configuration
-│   ├── templates/                   # The 4 Core Hyper Elements Source Templates:
-│   │   ├── IncidentWebPage.tsx      # <Page> Live War-Room Portal
-│   │   ├── IncidentEmail.tsx        # <Email> Emergency Customer SLA Dispatch
-│   │   ├── IncidentAuditDoc.tsx     # <Document> 2-Page Formal Root Cause Analysis PDF
-│   │   └── IncidentSocialCard.tsx   # <Canvas> 1200x630 Resolution Social Badge
+│   │   ├── colorSuites.ts               # Natural Restorative Slate & calibrated palettes
+│   │   └── incidentTheme.ts             # Hyper Elements defineTheme configuration
+│   ├── templates/                       # The 4 Core Hyper Elements Source Templates:
+│   │   ├── IncidentWebPage.tsx          # <Page> Live War-Room Portal
+│   │   ├── IncidentEmail.tsx            # <Email> Emergency Customer SLA Dispatch
+│   │   ├── IncidentAuditDoc.tsx         # <Document> 2-Page Formal Root Cause Analysis PDF
+│   │   └── IncidentSocialCard.tsx       # <Canvas> 1200x630 Resolution Social Badge
 │   ├── showcase/
-│   │   ├── ShowcaseApp.tsx          # Submission-ready 4-tab interactive runner
-│   │   ├── NetworkTopologyMap.tsx   # Interactive SVG Anycast BGP Route Leak Visualizer
-│   │   ├── WebPagePreview.tsx       # Live status portal DOM renderer
-│   │   ├── EmailPreview.tsx         # SRE email dispatch DOM renderer
-│   │   ├── AuditDocPreview.tsx      # Formal RCA dossier DOM renderer
-│   │   └── SocialCardPreview.tsx    # Resolution badge DOM renderer
-│   ├── App.tsx                      # Root Application
+│   │   ├── ShowcaseApp.tsx              # Submission-ready 4-tab interactive runner
+│   │   ├── NetworkTopologyMap.tsx       # Interactive SVG Anycast BGP Route Leak Visualizer
+│   │   ├── WebPagePreview.tsx           # Live status portal DOM renderer
+│   │   ├── EmailPreview.tsx             # SRE email dispatch DOM renderer
+│   │   ├── AuditDocPreview.tsx          # Formal RCA dossier DOM renderer
+│   │   └── SocialCardPreview.tsx        # Resolution badge DOM renderer
+│   ├── App.tsx                          # Root Application
 │   ├── main.tsx
-│   └── index.css                    # Emil Kowalski craft motion & token reset
+│   └── index.css                        # Emil Kowalski craft motion & token reset
 ├── package.json
 └── README.md
 ```
