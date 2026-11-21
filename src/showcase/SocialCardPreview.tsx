@@ -1,5 +1,4 @@
-import type { IncidentManifest } from "../data/types";
-import type { TypographyOptionId } from "./TypographyCanvas";
+import type { IncidentManifest, TypographyOptionId } from "../data/types";
 import { CheckCircle2, ShieldAlert } from "lucide-react";
 
 export default function SocialCardPreview({

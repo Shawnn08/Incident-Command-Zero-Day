@@ -1,5 +1,4 @@
-import type { IncidentManifest } from "../data/types";
-import type { TypographyOptionId } from "./TypographyCanvas";
+import type { IncidentManifest, TypographyOptionId } from "../data/types";
 
 export default function AuditDocPreview({
   incident,

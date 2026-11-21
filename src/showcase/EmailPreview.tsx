@@ -1,5 +1,4 @@
-import type { IncidentManifest } from "../data/types";
-import type { TypographyOptionId } from "./TypographyCanvas";
+import type { IncidentManifest, TypographyOptionId } from "../data/types";
 import { colorSuites, type ColorSuiteId } from "../theme/colorSuites";
 import NetworkTopologyMap from "./NetworkTopologyMap";
 import { ShieldAlert, CheckCircle2, Clock, Terminal, ChevronRight, FileCode } from "lucide-react";

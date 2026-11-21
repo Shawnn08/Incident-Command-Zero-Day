@@ -8,8 +8,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint src/",
     "check": "hyper-elements check src/templates/IncidentEmail.tsx src/templates/IncidentWebPage.tsx src/templates/IncidentAuditDoc.tsx src/templates/IncidentSocialCard.tsx",
-    "render-templates": "hyper-elements render src/templates/IncidentEmail.tsx src/templates/IncidentWebPage.tsx src/templates/IncidentAuditDoc.tsx --out dist/templates"
+    "render-templates": "hyper-elements render src/templates/IncidentEmail.tsx src/templates/IncidentWebPage.tsx src/templates/IncidentAuditDoc.tsx --out dist/templates",
+    "screenshots": "node scripts/capture-screenshots.mjs"
   },
   "dependencies": {
     "@hyper-elements/react": "^0.5.2",
@@ -27,6 +30,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "oxlint": "^1.94.0",
     "puppeteer": "^25.18.1",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"

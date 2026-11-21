@@ -1,5 +1,6 @@
 export type Severity = "P0 - CRITICAL" | "P1 - HIGH" | "P2 - MEDIUM";
 export type IncidentStatus = "INVESTIGATING" | "IDENTIFIED" | "MONITORING" | "RESOLVED";
+export type TypographyOptionId = "option-a" | "option-b" | "option-c";
 
 export interface TimelineEvent {
   timestamp: string;
