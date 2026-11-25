@@ -23,10 +23,10 @@ const EmailRoot = Email as any;
 
 export default function IncidentEmail({ incident = activeP0Incident }: IncidentEmailProps) {
   const isResolved = incident.status === "RESOLVED";
-  const statusColor = isResolved ? "#6ee7b7" : "#fda4af";
-  const statusBg = isResolved ? "rgba(110, 231, 183, 0.14)" : "rgba(253, 164, 175, 0.14)";
-  const statusBorder = isResolved ? "rgba(110, 231, 183, 0.35)" : "rgba(253, 164, 175, 0.35)";
-  const btnBg = isResolved ? "#0d9488" : "#be123c";
+  const statusColor = isResolved ? "#10b981" : "#f43f5e";
+  const statusBg = isResolved ? "rgba(16, 185, 129, 0.12)" : "rgba(244, 63, 94, 0.12)";
+  const statusBorder = isResolved ? "rgba(16, 185, 129, 0.28)" : "rgba(244, 63, 94, 0.28)";
+  const btnBg = isResolved ? "#059669" : "#be123c";
 
   return (
     <EmailRoot
@@ -34,30 +34,31 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
       lang="en"
       theme={incidentTheme}
       previewText={`[${incident.severity}] ${incident.id}: ${incident.title}`}
-      title={`Incident Update: ${incident.id}`}
+      title={`Incident Dispatch: ${incident.id}`}
       style={{
-        gap: 16,
+        gap: 20,
       }}
     >
-      {/* Brand Header & Severity Banner (Outer: 10px radius) */}
       <Column
         style={{
-          backgroundColor: "#151e1b",
-          padding: 24,
-          borderRadius: 10,
-          border: { width: 1, style: "solid", color: "#283832" },
-          gap: 16,
+          backgroundColor: "#0f1219",
+          padding: 28,
+          borderRadius: 8,
+          border: { width: 1, style: "solid", color: "#1e2230" },
+          gap: 20,
         }}
       >
+        {/* Top Masthead Row */}
         <Row stackOnMobile style={{ alignItems: "center", gap: 12 }}>
-          <Column style={{ gap: 4 }}>
-            <Text style={{ fontSize: 13, color: "#2dd4bf", textTransform: "uppercase", letterSpacing: 1, fontWeight: 700 }}>
-              {incident.organization} • Ops Bridge Dispatch
+          <Column style={{ flex: 1, gap: 4 }}>
+            <Text style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>
+              {incident.organization} • SLA Emergency Dispatch
             </Text>
-            <Heading level={1} style={{ fontSize: 24, color: "#e6f0ec", fontWeight: 800 }}>
+            <Heading level={1} style={{ fontSize: 24, color: "#f8fafc", fontWeight: 800 }}>
               {incident.id}: {incident.title}
             </Heading>
           </Column>
+
           <Column
             style={{
               backgroundColor: statusBg,
@@ -73,153 +74,117 @@ export default function IncidentEmail({ incident = activeP0Incident }: IncidentE
           </Column>
         </Row>
 
-        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#283832" } }} />
+        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#1e2230" } }} />
 
-        {/* Executive Summary (Strict 16px Body Copy) */}
-        <Text style={{ fontSize: 16, color: "#e6f0ec", lineHeight: 1.6 }}>
+        {/* Executive Incident Brief */}
+        <Text style={{ fontSize: 16, color: "#f8fafc", lineHeight: 1.6 }}>
           {incident.summary}
         </Text>
 
-        {/* Metric Cards Row (Prominent 22px Numbers) */}
-        <Row stackOnMobile style={{ gap: 12 }}>
-          <Column
-            style={{
-              backgroundColor: "#1e2a26",
-              padding: 16,
-              borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#283832" },
-              gap: 4,
-            }}
-          >
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Peak Error Rate</Text>
-            <Heading level={2} style={{ fontSize: 22, color: statusColor, fontWeight: 800 }}>
-              {incident.metrics.peakErrorRate}
-            </Heading>
-          </Column>
-          <Column
-            style={{
-              backgroundColor: "#1e2a26",
-              padding: 16,
-              borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#283832" },
-              gap: 4,
-            }}
-          >
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Affected PoPs</Text>
-            <Heading level={2} style={{ fontSize: 22, color: "#e6f0ec", fontWeight: 800 }}>
-              {incident.metrics.affectedPoPs} / {incident.metrics.totalPoPs}
-            </Heading>
-          </Column>
-          <Column
-            style={{
-              backgroundColor: "#1e2a26",
-              padding: 16,
-              borderRadius: 6,
-              border: { width: 1, style: "solid", color: "#283832" },
-              gap: 4,
-            }}
-          >
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Duration</Text>
-            <Heading level={2} style={{ fontSize: 22, color: "#e6f0ec", fontWeight: 800 }}>
-              {incident.durationMinutes} min
-            </Heading>
-          </Column>
-        </Row>
-      </Column>
+        <Text style={{ fontSize: 14, color: "#94a3b8", lineHeight: 1.55 }}>
+          <Span style={{ color: "#f8fafc", fontWeight: 600 }}>Forensic Root Cause: </Span>
+          {incident.rootCause}
+        </Text>
 
-      {/* Impacted Microservices Table */}
-      <Column
-        style={{
-          backgroundColor: "#151e1b",
-          padding: 24,
-          borderRadius: 10,
-          border: { width: 1, style: "solid", color: "#283832" },
-          gap: 14,
-        }}
-      >
-        <Heading level={2} style={{ fontSize: 18, color: "#e6f0ec", fontWeight: 700 }}>
-          Subsystem Degradation Matrix
-        </Heading>
+        <Text style={{ fontSize: 13, fontStyle: "italic", color: "#38bdf8", lineHeight: 1.5 }}>
+          Notice: Urgent SLA notification dispatched under RFC 7908 Anycast BGP mitigation protocols.
+        </Text>
 
+        {/* Telemetry Summary Table (Table-safe for Outlook) */}
         <Table
           style={{
-            cellPadding: [12, 10],
-            rowBorder: { width: 1, style: "solid", color: "#283832" },
+            cellPadding: [12, 14],
+            rowBorder: { width: 1, style: "solid", color: "#1e2230" },
             borderCollapse: "collapse",
+            backgroundColor: "#08090d",
           }}
         >
           <TableRow header>
-            <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Subsystem</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Region</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#8aa399", textAlign: "right" }}>Health</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#94a3b8", textTransform: "uppercase" }}>Peak Error Rate</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#94a3b8", textTransform: "uppercase" }}>Edge Packet Drop</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#94a3b8", textTransform: "uppercase", textAlign: "right" }}>Impacted Requests</TableCell>
           </TableRow>
-          {incident.impactedServices.map((service, idx) => (
-            <TableRow key={idx}>
-              <TableCell style={{ fontSize: 14, color: "#e6f0ec", fontWeight: 500 }}>
-                {service.name}
-              </TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399" }}>
-                {service.region}
-              </TableCell>
-              <TableCell
-                style={{
-                  fontSize: 13,
-                  fontWeight: 600,
-                  textAlign: "right",
-                  color: service.impactLevel === "OPERATIONAL" ? "#6ee7b7" : service.impactLevel === "DEGRADED" ? "#fbbf24" : "#fda4af",
-                }}
-              >
-                {service.impactLevel}
-              </TableCell>
-            </TableRow>
-          ))}
+          <TableRow>
+            <TableCell style={{ fontSize: 20, fontWeight: 800, color: statusColor }}>
+              {incident.metrics.peakErrorRate}
+            </TableCell>
+            <TableCell style={{ fontSize: 20, fontWeight: 800, color: statusColor }}>
+              {incident.metrics.packetLoss}
+            </TableCell>
+            <TableCell style={{ fontSize: 20, fontWeight: 800, color: "#f8fafc", textAlign: "right" }}>
+              {incident.metrics.impactedRequests}
+            </TableCell>
+          </TableRow>
         </Table>
-      </Column>
 
-      {/* Latest Timeline Event & 44px Action CTA */}
-      <Column
-        style={{
-          backgroundColor: "#151e1b",
-          padding: 24,
-          borderRadius: 10,
-          border: { width: 1, style: "solid", color: "#283832" },
-          gap: 14,
-        }}
-      >
-        <Text style={{ fontSize: 12, color: "#2dd4bf", textTransform: "uppercase", fontWeight: 700 }}>
-          Latest Action • {incident.timeline[incident.timeline.length - 1].timestamp}
-        </Text>
-        <Heading level={2} style={{ fontSize: 18, color: "#e6f0ec" }}>
-          {incident.timeline[incident.timeline.length - 1].title}
-        </Heading>
-        <Text style={{ fontSize: 15, color: "#8aa399", lineHeight: 1.5 }}>
-          {incident.timeline[incident.timeline.length - 1].description}
-        </Text>
+        {/* Impacted Region Matrix */}
+        <Column style={{ gap: 10 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#f8fafc", fontWeight: 700 }}>
+            Impacted Edge Subsystems
+          </Heading>
+          <Table
+            style={{
+              cellPadding: [10, 12],
+              rowBorder: { width: 1, style: "solid", color: "#1e2230" },
+              borderCollapse: "collapse",
+              backgroundColor: "#08090d",
+            }}
+          >
+            <TableRow header>
+              <TableCell style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600 }}>Service</TableCell>
+              <TableCell style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600 }}>Region</TableCell>
+              <TableCell style={{ fontSize: 12, color: "#94a3b8", fontWeight: 600, textAlign: "right" }}>State</TableCell>
+            </TableRow>
+            {incident.impactedServices.map((svc, idx) => (
+              <TableRow key={idx}>
+                <TableCell style={{ fontSize: 13, color: "#f8fafc", fontWeight: 600 }}>{svc.name}</TableCell>
+                <TableCell style={{ fontSize: 13, color: "#94a3b8" }}>{svc.region}</TableCell>
+                <TableCell
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 700,
+                    textAlign: "right",
+                    color: svc.impactLevel === "OPERATIONAL" ? "#10b981" : "#f43f5e",
+                  }}
+                >
+                  {svc.impactLevel}
+                </TableCell>
+              </TableRow>
+            ))}
+          </Table>
+        </Column>
 
-        <Button
-          href="https://status.aethernet.cloud/incidents/INC-8492"
-          style={{
-            backgroundColor: btnBg,
-            color: "#ffffff",
-            borderRadius: 6,
-            padding: [12, 24],
-            alignSelf: "start",
-            fontWeight: 700,
-            fontSize: 14,
-          }}
-        >
-          {isResolved ? "View Formal Post-Mortem Report" : "Join Active Incident War Room"}
-        </Button>
-      </Column>
+        {/* 44px High-Contrast Action CTA */}
+        <Column style={{ padding: [8, 0, 0, 0] }}>
+          <Button
+            href={`https://status.aethernet.internal/incidents/${incident.id}`}
+            style={{
+              backgroundColor: btnBg,
+              color: "#ffffff",
+              padding: [14, 24],
+              borderRadius: 6,
+              fontSize: 14,
+              fontWeight: 700,
+              textAlign: "center",
+            }}
+          >
+            View Live Incident Telemetry &amp; Resolution Feed
+          </Button>
+        </Column>
 
-      {/* Verified Footer */}
-      <Column style={{ alignItems: "center", gap: 4, padding: [8, 0] }}>
-        <Text style={{ fontSize: 13, color: "#8aa399", textAlign: "center" }}>
-          Incident Commander: <Span style={{ color: "#e6f0ec", fontWeight: 600 }}>{incident.commander.name}</Span> ({incident.commander.role})
-        </Text>
-        <Text style={{ fontSize: 12, color: "#8aa399", textAlign: "center" }}>
-          Audit Hash: <Span style={{ color: "#2dd4bf" }}>{incident.compliance.auditHash.substring(0, 28)}...</Span>
-        </Text>
+        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#1e2230" } }} />
+
+        {/* Footer Meta */}
+        <Row stackOnMobile style={{ alignItems: "center", gap: 8 }}>
+          <Column style={{ flex: 1 }}>
+            <Text style={{ fontSize: 12, color: "#94a3b8" }}>
+              Incident Commander: <Span style={{ color: "#f8fafc", fontWeight: 600 }}>{incident.commander.name}</Span>
+            </Text>
+          </Column>
+          <Text style={{ fontSize: 12, color: "#94a3b8" }}>
+            Audit Hash: {incident.compliance.auditHash.substring(0, 18)}...
+          </Text>
+        </Row>
       </Column>
     </EmailRoot>
   );

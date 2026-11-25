@@ -4,6 +4,22 @@
   "version": "1.0.0",
   "type": "module",
   "description": "One incident manifest -> Emergency SLA Email, Live Status Page, Formal SOC2 RCA PDF, and Resolution Social Badge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Shawnn08/incident-command-zero-day.git"
+  },
+  "author": "Shreyansh Giri",
+  "license": "MIT",
+  "keywords": [
+    "hyper-elements",
+    "unlayer",
+    "incident-response",
+    "status-page",
+    "email-template",
+    "pdf-whitepaper",
+    "rca-postmortem",
+    "sre"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

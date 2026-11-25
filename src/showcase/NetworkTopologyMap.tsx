@@ -1,31 +1,22 @@
 export default function NetworkTopologyMap({
   isResolved = false,
-  accentColor = "#2dd4bf",
-  alertColor = "#f87171",
-  successColor = "#34d399",
-  cardBg = "#1e2a26",
-  borderColor = "#283832",
-  labelColor = "#e6f0ec",
-  mutedColor = "#8aa399",
-  gridLineColor = "rgba(255, 255, 255, 0.06)",
 }: {
   isResolved?: boolean;
-  accentColor?: string;
-  alertColor?: string;
-  successColor?: string;
-  cardBg?: string;
-  borderColor?: string;
-  labelColor?: string;
-  mutedColor?: string;
-  gridLineColor?: string;
 }) {
-  const statusColor = isResolved ? successColor : alertColor;
+  const statusMint = "#10b981";
+  const statusRose = "#f43f5e";
+  const statusAmber = "#f59e0b";
+  const textPrimary = "#f8fafc";
+  const textSecondary = "#94a3b8";
+  const textMuted = "#64748b";
+
+  const activeColor = isResolved ? statusMint : statusRose;
 
   return (
     <div
       style={{
-        backgroundColor: cardBg,
-        border: `1px solid ${borderColor}`,
+        backgroundColor: "#090a0f",
+        border: "1px solid #1e2230",
         borderRadius: 8,
         padding: "20px 24px",
         display: "flex",
@@ -35,188 +26,197 @@ export default function NetworkTopologyMap({
         overflow: "hidden",
       }}
     >
-      {/* Header HUD */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span
-            style={{
-              width: 10,
-              height: 10,
-              borderRadius: "50%",
-              backgroundColor: statusColor,
-              boxShadow: `0 0 10px ${statusColor}`,
-              display: "inline-block",
-            }}
-          />
-          <span style={{ fontSize: 13, fontWeight: 700, color: accentColor, textTransform: "uppercase", letterSpacing: "1px", fontFamily: "'Space Mono', monospace" }}>
-            TELEMETRY // GLOBAL ANYCAST BGP TOPOLOGY MAP
-          </span>
-        </div>
-        <div style={{ fontSize: 11, color: mutedColor, fontFamily: "'Space Mono', monospace" }}>
-          RFC 7908 • AS-64512 LEAK DETECTION
-        </div>
-      </div>
-
-      {/* SVG Interactive Visual Imagery Map - Expanded 760x260 ViewBox (No Overlapping Text) */}
-      <div style={{ width: "100%", height: "auto", minHeight: 240, display: "flex", justifyContent: "center" }}>
-        <svg
-          viewBox="0 0 760 260"
-          style={{ width: "100%", maxHeight: 270, overflow: "visible" }}
-        >
-          <defs>
-            <linearGradient id="healthyPathPastel" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={accentColor} stopOpacity="0.8" />
-              <stop offset="100%" stopColor={successColor} stopOpacity="0.8" />
-            </linearGradient>
-            <linearGradient id="leakPathPastel" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={alertColor} stopOpacity="0.9" />
-              <stop offset="100%" stopColor={accentColor} stopOpacity="0.4" />
-            </linearGradient>
-          </defs>
-
-          {/* Background Grid Lines */}
-          <line x1="30" y1="50" x2="730" y2="50" stroke={gridLineColor} strokeDasharray="4 4" strokeWidth="0.8" />
-          <line x1="30" y1="125" x2="730" y2="125" stroke={gridLineColor} strokeDasharray="4 4" strokeWidth="0.8" />
-          <line x1="30" y1="200" x2="730" y2="200" stroke={gridLineColor} strokeDasharray="4 4" strokeWidth="0.8" />
-
-          {/* Cable Routes (Spaced Out with Generous Bezier Curvature) */}
-          {/* IAD (100, 120) to LHR (280, 70) */}
-          <path
-            d="M 100 120 C 180 60, 220 60, 280 70"
-            fill="none"
-            stroke="url(#healthyPathPastel)"
-            strokeWidth="2.5"
-            strokeDasharray={isResolved ? "none" : "6 4"}
-          />
-
-          {/* LHR (280, 70) to FRA (460, 175) */}
-          <path
-            d="M 280 70 C 340 80, 390 140, 460 175"
-            fill="none"
-            stroke={isResolved ? "url(#healthyPathPastel)" : "url(#leakPathPastel)"}
-            strokeWidth={isResolved ? "2.5" : "3.5"}
-            strokeDasharray={isResolved ? "none" : "5 5"}
-          />
-
-          {/* IAD (100, 120) to NRT (660, 110) direct transit */}
-          <path
-            d="M 100 120 C 260 230, 500 230, 660 110"
-            fill="none"
-            stroke="url(#healthyPathPastel)"
-            strokeWidth="2"
-            opacity="0.75"
-          />
-
-          {/* FRA (460, 175) to NRT (660, 110) */}
-          <path
-            d="M 460 175 C 540 185, 600 145, 660 110"
-            fill="none"
-            stroke={isResolved ? "url(#healthyPathPastel)" : alertColor}
-            strokeWidth="2"
-            strokeDasharray={isResolved ? "none" : "4 4"}
-            opacity={isResolved ? 0.9 : 0.6}
-          />
-
-          {/* Central Route Status Pill (370, 115) - Completely Clear from All Nodes */}
-          {!isResolved && (
-            <g transform="translate(365, 115)">
-              <rect x="-56" y="-14" width="112" height="28" rx="6" fill="rgba(248, 113, 113, 0.2)" stroke="rgba(248, 113, 113, 0.5)" strokeWidth="1" />
-              <text x="0" y="5" textAnchor="middle" fill="#f87171" fontSize="10" fontWeight="700" fontFamily="'Space Mono', monospace">
-                PACKET DROP 42%
-              </text>
-            </g>
-          )}
-
-          {isResolved && (
-            <g transform="translate(365, 115)">
-              <rect x="-56" y="-14" width="112" height="28" rx="6" fill="rgba(52, 211, 153, 0.2)" stroke="rgba(52, 211, 153, 0.5)" strokeWidth="1" />
-              <text x="0" y="5" textAnchor="middle" fill="#34d399" fontSize="10" fontWeight="700" fontFamily="'Space Mono', monospace">
-                ROV CONVERGED
-              </text>
-            </g>
-          )}
-
-          {/* POP 1: US East (IAD-1 at 100, 120) */}
-          <g transform="translate(100, 120)">
-            <circle r="20" fill={cardBg} stroke={accentColor} strokeWidth="2.5" />
-            <circle r="7" fill={accentColor} />
-            <text x="0" y="-30" textAnchor="middle" fill={labelColor} fontSize="13" fontWeight="700" fontFamily="'Space Mono', monospace">
-              IAD-1
-            </text>
-            <text x="0" y="38" textAnchor="middle" fill={mutedColor} fontSize="11" fontFamily="'Space Mono', monospace">
-              Ashburn • 100% OK
-            </text>
-          </g>
-
-          {/* POP 2: London (LHR-2 at 280, 70) */}
-          <g transform="translate(280, 70)">
-            <circle r="20" fill={cardBg} stroke={isResolved ? successColor : "#fbbf24"} strokeWidth="2.5" />
-            <circle r="7" fill={isResolved ? successColor : "#fbbf24"} />
-            <text x="0" y="-28" textAnchor="middle" fill={labelColor} fontSize="13" fontWeight="700" fontFamily="'Space Mono', monospace">
-              LHR-2
-            </text>
-            <text x="0" y="38" textAnchor="middle" fill={mutedColor} fontSize="11" fontFamily="'Space Mono', monospace">
-              {isResolved ? "London • Healthy" : "London • Rerouting"}
-            </text>
-          </g>
-
-          {/* POP 3: Frankfurt (FRA-1 at 460, 175) - Cleanly Lowered Ground Zero */}
-          <g transform="translate(460, 175)">
-            <circle
-              r="24"
-              fill={cardBg}
-              stroke={isResolved ? successColor : alertColor}
-              strokeWidth="3"
-            />
-            <circle r="8" fill={isResolved ? successColor : alertColor} />
-            <text x="0" y="-32" textAnchor="middle" fill={labelColor} fontSize="13" fontWeight="800" fontFamily="'Space Mono', monospace">
-              FRA-1
-            </text>
-            <text x="0" y="40" textAnchor="middle" fill={isResolved ? successColor : alertColor} fontSize="11" fontWeight="700" fontFamily="'Space Mono', monospace">
-              {isResolved ? "ROV Active • Verified" : "LEAK ORIGIN • ISOLATED"}
-            </text>
-          </g>
-
-          {/* POP 4: Tokyo (NRT-1 at 660, 110) */}
-          <g transform="translate(660, 110)">
-            <circle r="20" fill={cardBg} stroke={accentColor} strokeWidth="2.5" />
-            <circle r="7" fill={accentColor} />
-            <text x="0" y="-30" textAnchor="middle" fill={labelColor} fontSize="13" fontWeight="700" fontFamily="'Space Mono', monospace">
-              NRT-1
-            </text>
-            <text x="0" y="38" textAnchor="middle" fill={mutedColor} fontSize="11" fontFamily="'Space Mono', monospace">
-              Tokyo • Stable
-            </text>
-          </g>
-        </svg>
-      </div>
-
-      {/* Telemetry Strip */}
+      {/* Visualizer Header */}
       <div
         style={{
-          borderTop: `1px solid ${gridLineColor}`,
-          paddingTop: 12,
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           flexWrap: "wrap",
           gap: 12,
-          fontSize: 11,
-          fontFamily: "'Space Mono', monospace",
         }}
       >
-        <div>
-          <span style={{ color: mutedColor }}>ANYCAST CONVERGENCE: </span>
-          <strong style={{ color: statusColor }}>{isResolved ? "100.0% (STABILIZED)" : "72.4% (PARTITIONED)"}</strong>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span
+            style={{
+              width: 8,
+              height: 8,
+              borderRadius: "50%",
+              backgroundColor: activeColor,
+              boxShadow: `0 0 12px ${activeColor}`,
+              display: "inline-block",
+            }}
+          />
+          <h3
+            style={{
+              fontSize: 15,
+              fontWeight: 700,
+              letterSpacing: "-0.01em",
+              color: textPrimary,
+              margin: 0,
+            }}
+          >
+            Anycast BGP Edge Routing Topology
+          </h3>
         </div>
-        <div>
-          <span style={{ color: mutedColor }}>TRANSIT FAILOVER: </span>
-          <span style={{ color: accentColor, fontWeight: 600 }}>AS-PATH PREPEND 3X ON TIER-1</span>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <span
+            style={{
+              fontSize: 11,
+              fontFamily: "'Geist Mono', monospace",
+              color: isResolved ? statusMint : statusRose,
+              backgroundColor: isResolved
+                ? "rgba(16, 185, 129, 0.12)"
+                : "rgba(244, 63, 94, 0.12)",
+              border: `1px solid ${
+                isResolved
+                  ? "rgba(16, 185, 129, 0.28)"
+                  : "rgba(244, 63, 94, 0.28)"
+              }`,
+              borderRadius: 4,
+              padding: "4px 10px",
+              fontWeight: 700,
+            }}
+          >
+            {isResolved ? "● ROV ENFORCED // 100% CONVERGED" : "▲ RFC 7908 ROUTE LEAK ACTIVE"}
+          </span>
+          <span
+            style={{
+              fontSize: 11,
+              color: textMuted,
+              fontFamily: "'Geist Mono', monospace",
+            }}
+          >
+            AS-64512
+          </span>
         </div>
-        <div>
-          <span style={{ color: mutedColor }}>ROV FILTER: </span>
-          <span style={{ color: isResolved ? successColor : "#fbbf24", fontWeight: 600 }}>{isResolved ? "ENFORCED (RFC 6811)" : "BYPASSED"}</span>
-        </div>
+      </div>
+
+      {/* SVG Topology Canvas (780 x 260) */}
+      <div style={{ width: "100%", overflowX: "auto" }}>
+        <svg
+          viewBox="0 0 780 260"
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            minWidth: "680px",
+          }}
+          aria-label="Anycast BGP Edge Network Map"
+        >
+          <defs>
+            <linearGradient id="healthyGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.8" />
+            </linearGradient>
+            <linearGradient id="leakedGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f43f5e" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.9" />
+            </linearGradient>
+          </defs>
+
+          {/* Background Grid Lines */}
+          <line x1="40" y1="65" x2="740" y2="65" stroke="#161924" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="40" y1="130" x2="740" y2="130" stroke="#161924" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="40" y1="195" x2="740" y2="195" stroke="#161924" strokeWidth="1" strokeDasharray="4 4" />
+
+          {/* Inter-PoP Mesh Lines */}
+          <path
+            d="M 110 130 C 200 70, 220 75, 300 75"
+            fill="none"
+            stroke={isResolved ? "url(#healthyGradient)" : "url(#leakedGradient)"}
+            strokeWidth={isResolved ? "2" : "2.5"}
+            strokeDasharray={isResolved ? "none" : "6 4"}
+          />
+          <path
+            d="M 300 75 C 380 75, 420 180, 490 180"
+            fill="none"
+            stroke={isResolved ? "url(#healthyGradient)" : "url(#leakedGradient)"}
+            strokeWidth={isResolved ? "2" : "2.5"}
+            strokeDasharray={isResolved ? "none" : "6 4"}
+          />
+          <path
+            d="M 490 180 C 560 180, 600 120, 670 120"
+            fill="none"
+            stroke="#10b981"
+            strokeWidth="2"
+          />
+          <path
+            d="M 110 130 C 300 230, 490 230, 670 120"
+            fill="none"
+            stroke="#1e2230"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+          />
+
+          {/* Node 1: IAD (US-East) */}
+          <g transform="translate(110, 130)">
+            <circle r="20" fill="#0f1219" stroke={isResolved ? statusMint : statusRose} strokeWidth="2" />
+            <circle r="6" fill={isResolved ? statusMint : statusRose} />
+            <text x="0" y="-28" textAnchor="middle" fill={textPrimary} fontSize="12" fontWeight="700" fontFamily="'Geist Mono', monospace">
+              IAD-01
+            </text>
+            <text x="0" y="36" textAnchor="middle" fill={textSecondary} fontSize="11" fontFamily="'Geist Mono', monospace">
+              {isResolved ? "0.0% Drop" : "42.8% Drop"}
+            </text>
+          </g>
+
+          {/* Node 2: LHR (London Edge) */}
+          <g transform="translate(300, 75)">
+            <circle r="20" fill="#0f1219" stroke={isResolved ? statusMint : statusRose} strokeWidth="2" />
+            <circle r="6" fill={isResolved ? statusMint : statusRose} />
+            <text x="0" y="-28" textAnchor="middle" fill={textPrimary} fontSize="12" fontWeight="700" fontFamily="'Geist Mono', monospace">
+              LHR-02
+            </text>
+            <text x="0" y="36" textAnchor="middle" fill={textSecondary} fontSize="11" fontFamily="'Geist Mono', monospace">
+              {isResolved ? "18ms Lat" : "240ms Lat"}
+            </text>
+          </g>
+
+          {/* Node 3: FRA (Frankfurt Transit) */}
+          <g transform="translate(490, 180)">
+            <circle r="20" fill="#0f1219" stroke={isResolved ? statusMint : statusAmber} strokeWidth="2" />
+            <circle r="6" fill={isResolved ? statusMint : statusAmber} />
+            <text x="0" y="-28" textAnchor="middle" fill={textPrimary} fontSize="12" fontWeight="700" fontFamily="'Geist Mono', monospace">
+              FRA-01
+            </text>
+            <text x="0" y="36" textAnchor="middle" fill={textSecondary} fontSize="11" fontFamily="'Geist Mono', monospace">
+              {isResolved ? "Nominal" : "Rerouted"}
+            </text>
+          </g>
+
+          {/* Node 4: NRT (Tokyo Edge) */}
+          <g transform="translate(670, 120)">
+            <circle r="20" fill="#0f1219" stroke={statusMint} strokeWidth="2" />
+            <circle r="6" fill={statusMint} />
+            <text x="0" y="-28" textAnchor="middle" fill={textPrimary} fontSize="12" fontWeight="700" fontFamily="'Geist Mono', monospace">
+              NRT-01
+            </text>
+            <text x="0" y="36" textAnchor="middle" fill={textSecondary} fontSize="11" fontFamily="'Geist Mono', monospace">
+              0.0% Drop
+            </text>
+          </g>
+
+          {/* Flow Annotations */}
+          {!isResolved && (
+            <g transform="translate(390, 115)">
+              <rect x="-85" y="-12" width="170" height="24" rx="4" fill="#161924" stroke="#f43f5e" strokeWidth="1" />
+              <text x="0" y="4" textAnchor="middle" fill="#f43f5e" fontSize="10" fontWeight="700" fontFamily="'Geist Mono', monospace">
+                ▲ AS-174 ROUTE LEAK
+              </text>
+            </g>
+          )}
+
+          {isResolved && (
+            <g transform="translate(390, 115)">
+              <rect x="-85" y="-12" width="170" height="24" rx="4" fill="#161924" stroke="#10b981" strokeWidth="1" />
+              <text x="0" y="4" textAnchor="middle" fill="#10b981" fontSize="10" fontWeight="700" fontFamily="'Geist Mono', monospace">
+                ✓ ROV FILTER ENFORCED
+              </text>
+            </g>
+          )}
+        </svg>
       </div>
     </div>
   );

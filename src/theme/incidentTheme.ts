@@ -2,57 +2,57 @@ import { defineTheme } from "@hyper-elements/react";
 
 export const incidentTheme = defineTheme({
   colors: {
-    background: "#0f1513",
-    foreground: "#e6f0ec",
+    background: "#090a0f",
+    foreground: "#f4f4f7",
     primary: "#be123c",
     primaryForeground: "#ffffff",
-    muted: "#8aa399",
-    border: "#283832",
+    muted: "#94a3b8",
+    border: "#1e2230",
   },
   formats: {
     document: {
       colors: {
-        background: "#0f1513",
-        foreground: "#e6f0ec",
-        border: "#283832",
+        background: "#ffffff",
+        foreground: "#0f172a",
+        border: "#e2e8f0",
       },
     },
     email: {
       colors: {
-        background: "#0f1513",
-        foreground: "#e6f0ec",
-        border: "#283832",
+        background: "#090a0f",
+        foreground: "#f4f4f7",
+        border: "#1e2230",
       },
     },
     page: {
       colors: {
-        background: "#0f1513",
-        foreground: "#e6f0ec",
-        border: "#283832",
+        background: "#090a0f",
+        foreground: "#f4f4f7",
+        border: "#1e2230",
       },
     },
     canvas: {
       colors: {
-        background: "#0f1513",
-        foreground: "#e6f0ec",
-        border: "#283832",
+        background: "#090a0f",
+        foreground: "#f4f4f7",
+        border: "#1e2230",
       },
     },
   },
   fonts: {
-    body: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-    heading: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    body: "'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    heading: "'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
   },
   elements: {
     Heading: {
       by: {
         level: {
-          1: { fontSize: 30, mobile: { fontSize: 24 }, fontWeight: 700 },
-          2: { fontSize: 24, mobile: { fontSize: 18 }, fontWeight: 600 },
-          3: { fontSize: 20, mobile: { fontSize: 16 }, fontWeight: 600 },
-          4: { fontSize: 18, fontWeight: 600 },
-          5: { fontSize: 16, fontWeight: 600 },
-          6: { fontSize: 14, fontWeight: 600 },
+          1: { fontSize: 32, mobile: { fontSize: 24 }, fontWeight: 700 },
+          2: { fontSize: 22, mobile: { fontSize: 18 }, fontWeight: 600 },
+          3: { fontSize: 18, mobile: { fontSize: 16 }, fontWeight: 600 },
+          4: { fontSize: 16, fontWeight: 600 },
+          5: { fontSize: 14, fontWeight: 600 },
+          6: { fontSize: 13, fontWeight: 600 },
         },
       },
     },
@@ -66,30 +66,18 @@ export const incidentTheme = defineTheme({
   },
   styles: {
     card: {
-      backgroundColor: "#151e1b",
+      backgroundColor: "#11131a",
       padding: 24,
-      borderRadius: 10,
-      border: { width: 1, style: "solid", color: "#283832" },
+      borderRadius: 8,
+      border: { width: 1, style: "solid", color: "#1e2230" },
       gap: 16,
     },
     cardInner: {
-      backgroundColor: "#1e2a26",
+      backgroundColor: "#161924",
       padding: 16,
       borderRadius: 6,
-      border: { width: 1, style: "solid", color: "#283832" },
+      border: { width: 1, style: "solid", color: "#1e2230" },
       gap: 8,
-    },
-    badgeCritical: {
-      backgroundColor: "rgba(253, 164, 175, 0.12)",
-      padding: [4, 10],
-      borderRadius: 4,
-      border: { width: 1, style: "solid", color: "rgba(253, 164, 175, 0.3)" },
-    },
-    badgeSuccess: {
-      backgroundColor: "rgba(110, 231, 183, 0.12)",
-      padding: [4, 10],
-      borderRadius: 4,
-      border: { width: 1, style: "solid", color: "rgba(110, 231, 183, 0.3)" },
     },
   },
 });

@@ -25,6 +25,8 @@ interface IncidentAuditDocProps {
 const DocumentRoot = Document as any;
 
 export default function IncidentAuditDoc({ incident = resolvedIncident }: IncidentAuditDocProps) {
+  const isResolved = incident.status === "RESOLVED";
+
   return (
     <DocumentRoot
       size="A4"
@@ -34,153 +36,151 @@ export default function IncidentAuditDoc({ incident = resolvedIncident }: Incide
       title={`Formal Root Cause Analysis Post-Mortem // ${incident.id}`}
       theme={incidentTheme}
       style={{
-        gap: 16,
+        gap: 18,
       }}
     >
-      {/* Persistent Page Header */}
+      {/* Persistent Running Page Header */}
       <PageHeader
         style={{
-          border: { width: 1, style: "solid", color: "#283832" },
+          border: { width: 1, style: "solid", color: "#e2e8f0" },
           padding: [8, 14],
-          backgroundColor: "#151e1b",
+          backgroundColor: "#f8fafc",
         }}
       >
         <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 11, fontWeight: 700, color: "#8aa399", textTransform: "uppercase", letterSpacing: 1 }}>
-            {incident.organization} • RELIABILITY ENGINEERING &amp; COMPLIANCE
+          <Text style={{ fontSize: 10, fontWeight: 700, color: "#475569", textTransform: "uppercase", letterSpacing: 1 }}>
+            {incident.organization} • RELIABILITY ENGINEERING &amp; AUDIT COMPLIANCE
           </Text>
-          <Text style={{ fontSize: 11, fontWeight: 700, color: "#fda4af", textTransform: "uppercase" }}>
+          <Text style={{ fontSize: 10, fontWeight: 700, color: "#b91c1c", textTransform: "uppercase" }}>
             {incident.compliance.classification}
           </Text>
         </Row>
       </PageHeader>
 
-      {/* Persistent Page Footer */}
+      {/* Persistent Running Page Footer */}
       <PageFooter
         style={{
-          border: { width: 1, style: "solid", color: "#283832" },
+          border: { width: 1, style: "solid", color: "#e2e8f0" },
           padding: [8, 14],
-          backgroundColor: "#151e1b",
+          backgroundColor: "#f8fafc",
         }}
       >
         <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-          <Text style={{ fontSize: 11, color: "#8aa399" }}>
-            Incident {incident.id} Post-Mortem • Audit Hash: {incident.compliance.auditHash.substring(0, 20)}...
+          <Text style={{ fontSize: 10, color: "#64748b" }}>
+            Incident {incident.id} Post-Mortem • Audit Hash: {incident.compliance.auditHash.substring(0, 24)}...
           </Text>
-          <Text style={{ fontSize: 11, color: "#8aa399" }}>
+          <Text style={{ fontSize: 10, color: "#64748b" }}>
             Page <PageNumber /> of <PageNumber total />
           </Text>
         </Row>
       </PageFooter>
 
       {/* ===================== PAGE 1 ===================== */}
-      <Column style={{ gap: 16 }}>
+      <Column style={{ gap: 18 }}>
         {/* Document Title Banner */}
         <Row style={{ alignItems: "center", justifyContent: "space-between" }}>
-          <Column style={{ gap: 2 }}>
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase", fontWeight: 700 }}>
-              Official Engineering Incident Report
+          <Column style={{ gap: 4 }}>
+            <Text style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase", fontWeight: 700, letterSpacing: 1 }}>
+              Official Engineering Post-Mortem Dossier
             </Text>
-            <Heading level={1} style={{ fontSize: 26, color: "#e6f0ec", fontWeight: 800 }}>
+            <Heading level={1} style={{ fontSize: 26, color: "#0f172a", fontWeight: 800 }}>
               Root Cause Analysis (RCA): {incident.id}
             </Heading>
+            <Text style={{ fontSize: 14, fontStyle: "italic", color: "#475569", lineHeight: 1.5 }}>
+              A forensic examination of Anycast BGP route propagation, telemetry failure modes, and architectural safeguards.
+            </Text>
           </Column>
+
           <Column
             style={{
-              backgroundColor: "rgba(253, 164, 175, 0.14)",
+              backgroundColor: isResolved ? "#ecfdf5" : "#fef2f2",
               padding: [6, 12],
               borderRadius: 4,
-              border: { width: 1, style: "solid", color: "rgba(253, 164, 175, 0.3)" },
+              border: { width: 1, style: "solid", color: isResolved ? "#a7f3d0" : "#fecaca" },
             }}
           >
-            <Text style={{ fontSize: 12, fontWeight: 700, color: "#fda4af" }}>
-              {incident.severity}
+            <Text style={{ fontSize: 12, fontWeight: 700, color: isResolved ? "#047857" : "#b91c1c" }}>
+              {incident.severity} • {incident.status}
             </Text>
           </Column>
         </Row>
 
-        <Text style={{ fontSize: 15, color: "#cbd5e1" }}>
-          Incident Title: <Span style={{ fontWeight: 700, color: "#e6f0ec" }}>{incident.title}</Span>
-        </Text>
-
-        {/* Incident Metadata Table */}
+        {/* Core Incident Metadata Matrix */}
         <Table
           style={{
-            cellPadding: [12, 14],
-            rowBorder: { width: 1, style: "solid", color: "#283832" },
+            cellPadding: [10, 14],
+            rowBorder: { width: 1, style: "solid", color: "#e2e8f0" },
             borderCollapse: "collapse",
-            backgroundColor: "#151e1b",
+            backgroundColor: "#ffffff",
           }}
         >
           <TableRow>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Incident Commander</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#e6f0ec" }}>{incident.commander.name} ({incident.commander.role})</TableCell>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Total Downtime</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#6ee7b7", fontWeight: 700 }}>{incident.durationMinutes} Minutes (MTTR)</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700, width: "25%" }}>Incident Commander</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#0f172a", width: "25%" }}>{incident.commander.name}</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700, width: "25%" }}>Total Downtime (MTTR)</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#047857", fontWeight: 700, width: "25%" }}>{incident.durationMinutes} Minutes</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Incident Started</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#e6f0ec" }}>{incident.startedAt}</TableCell>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Incident Mitigated</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#e6f0ec" }}>{incident.mitigatedAt}</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700 }}>Incident Detected</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#0f172a" }}>{incident.detectedAt}</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700 }}>Incident Mitigated</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#0f172a" }}>{incident.mitigatedAt}</TableCell>
           </TableRow>
           <TableRow>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Peak Error Rate</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#fda4af", fontWeight: 700 }}>{incident.metrics.peakErrorRate}</TableCell>
-            <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#8aa399" }}>Impacted Requests</TableCell>
-            <TableCell style={{ fontSize: 13, color: "#e6f0ec" }}>{incident.metrics.impactedRequests}</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700 }}>Peak Error Rate</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#b91c1c", fontWeight: 700 }}>{incident.metrics.peakErrorRate}</TableCell>
+            <TableCell style={{ fontSize: 12, color: "#475569", fontWeight: 700 }}>Impacted Requests</TableCell>
+            <TableCell style={{ fontSize: 13, color: "#0f172a" }}>{incident.metrics.impactedRequests}</TableCell>
           </TableRow>
         </Table>
 
-        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#283832" } }} />
-
         {/* Section 1: Executive Summary */}
         <Column style={{ gap: 6 }}>
-          <Heading level={2} style={{ fontSize: 18, color: "#2dd4bf", fontWeight: 700 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
             1. Executive Summary &amp; Impact
           </Heading>
-          <Text style={{ fontSize: 15, color: "#cbd5e1", lineHeight: 1.6 }}>
+          <Text style={{ fontSize: 13, lineHeight: 1.6, color: "#334155" }}>
             {incident.summary}
           </Text>
         </Column>
 
-        {/* Section 2: Technical Root Cause Analysis */}
+        {/* Section 2: Technical Root Cause */}
         <Column style={{ gap: 6 }}>
-          <Heading level={2} style={{ fontSize: 18, color: "#2dd4bf", fontWeight: 700 }}>
-            2. Technical Root Cause (RFC 7908 Route Leak)
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
+            2. Technical Root Cause (RFC 7908 BGP Route Leak)
           </Heading>
-          <Text style={{ fontSize: 15, color: "#cbd5e1", lineHeight: 1.6 }}>
+          <Text style={{ fontSize: 13, lineHeight: 1.6, color: "#334155" }}>
             {incident.rootCause}
           </Text>
         </Column>
 
-        {/* Section 3: 5 Whys Analysis Table */}
-        <Column style={{ gap: 6 }}>
-          <Heading level={2} style={{ fontSize: 18, color: "#2dd4bf", fontWeight: 700 }}>
-            3. Five Whys Forensic Analysis
+        {/* Section 3: 5-Whys Forensic Analysis */}
+        <Column style={{ gap: 8 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
+            3. Five-Whys Forensic Cascade
           </Heading>
           <Table
             style={{
-              cellPadding: [10, 12],
-              rowBorder: { width: 1, style: "solid", color: "#283832" },
+              cellPadding: [8, 12],
+              rowBorder: { width: 1, style: "solid", color: "#e2e8f0" },
               borderCollapse: "collapse",
-              backgroundColor: "#151e1b",
+              backgroundColor: "#ffffff",
             }}
           >
             <TableRow header>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 40 }}>Level</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 220 }}>Why Question</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Forensic Finding</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "14%", fontWeight: 700 }}>Level</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "43%", fontWeight: 700 }}>Diagnostic Question</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "43%", fontWeight: 700 }}>Forensic Finding</TableCell>
             </TableRow>
             {incident.fiveWhys.map((why) => (
               <TableRow key={why.level}>
-                <TableCell style={{ fontSize: 13, fontWeight: 700, color: "#2dd4bf" }}>
+                <TableCell style={{ fontSize: 12, fontWeight: 700, color: "#0369a1" }}>
                   Why #{why.level}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#e6f0ec", fontWeight: 600 }}>
+                <TableCell style={{ fontSize: 12, color: "#0f172a" }}>
                   {why.question}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#cbd5e1" }}>
+                <TableCell style={{ fontSize: 12, color: "#475569" }}>
                   {why.answer}
                 </TableCell>
               </TableRow>
@@ -189,119 +189,122 @@ export default function IncidentAuditDoc({ incident = resolvedIncident }: Incide
         </Column>
       </Column>
 
+      {/* ===================== PAGE BREAK ===================== */}
       <PageBreak />
 
       {/* ===================== PAGE 2 ===================== */}
-      <Column style={{ gap: 16 }}>
-        {/* Section 4: Chronological Action Timeline */}
-        <Column style={{ gap: 6 }}>
-          <Heading level={2} style={{ fontSize: 18, color: "#2dd4bf", fontWeight: 700 }}>
-            4. Chronological Incident Mitigation Log
+      <Column style={{ gap: 20 }}>
+        {/* Section 4: Chronological Timeline Log */}
+        <Column style={{ gap: 8 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
+            4. Chronological Remediation Log
           </Heading>
           <Table
             style={{
-              cellPadding: [10, 12],
-              rowBorder: { width: 1, style: "solid", color: "#283832" },
+              cellPadding: [8, 12],
+              rowBorder: { width: 1, style: "solid", color: "#e2e8f0" },
               borderCollapse: "collapse",
-              backgroundColor: "#151e1b",
+              backgroundColor: "#ffffff",
             }}
           >
             <TableRow header>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 80 }}>Time (UTC)</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 100 }}>Phase</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Action &amp; Telemetry</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 100 }}>Actor</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "18%", fontWeight: 700 }}>Timestamp</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "62%", fontWeight: 700 }}>Mitigation Event</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "20%", fontWeight: 700 }}>Actor</TableCell>
             </TableRow>
-            {incident.timeline.map((event, idx) => (
+            {incident.timeline.map((item, idx) => (
               <TableRow key={idx}>
-                <TableCell style={{ fontSize: 13, fontFamily: "monospace", color: "#2dd4bf" }}>
-                  {event.timestamp}
+                <TableCell style={{ fontSize: 12, fontWeight: 700, color: "#047857" }}>
+                  {item.timestamp}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, fontWeight: 600, color: "#e6f0ec" }}>
-                  {event.phase}
+                <TableCell style={{ fontSize: 12, color: "#0f172a" }}>
+                  <Span style={{ fontWeight: 600 }}>{item.title}: </Span>
+                  {item.description}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#cbd5e1" }}>
-                  <Span style={{ fontWeight: 600, color: "#e6f0ec" }}>{event.title}: </Span>
-                  {event.description}
-                </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#8aa399" }}>
-                  {event.actor}
+                <TableCell style={{ fontSize: 11, color: "#64748b" }}>
+                  {item.actor}
                 </TableCell>
               </TableRow>
             ))}
           </Table>
         </Column>
 
-        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#283832" } }} />
-
         {/* Section 5: Corrective Action Items */}
-        <Column style={{ gap: 6 }}>
-          <Heading level={2} style={{ fontSize: 18, color: "#2dd4bf", fontWeight: 700 }}>
+        <Column style={{ gap: 8 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
             5. Corrective Action Items &amp; Architectural Hardening
           </Heading>
           <Table
             style={{
-              cellPadding: [10, 12],
-              rowBorder: { width: 1, style: "solid", color: "#283832" },
+              cellPadding: [8, 12],
+              rowBorder: { width: 1, style: "solid", color: "#e2e8f0" },
               borderCollapse: "collapse",
-              backgroundColor: "#151e1b",
+              backgroundColor: "#ffffff",
             }}
           >
             <TableRow header>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 60 }}>ID</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399" }}>Action Item Description</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 90 }}>Priority</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 100 }}>Owner</TableCell>
-              <TableCell style={{ fontSize: 13, color: "#8aa399", width: 90 }}>Status</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "16%", fontWeight: 700 }}>Jira Ticket</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "46%", fontWeight: 700 }}>Action Item</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "20%", fontWeight: 700 }}>Owner</TableCell>
+              <TableCell style={{ fontSize: 11, color: "#475569", width: "18%", textAlign: "right", fontWeight: 700 }}>Status</TableCell>
             </TableRow>
-            {incident.actionItems.map((action) => (
-              <TableRow key={action.id}>
-                <TableCell style={{ fontSize: 13, fontFamily: "monospace", color: "#2dd4bf" }}>
-                  {action.id}
+            {incident.actionItems.map((act) => (
+              <TableRow key={act.id}>
+                <TableCell style={{ fontSize: 12, fontWeight: 700, color: "#0369a1" }}>
+                  {act.id}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#e6f0ec" }}>
-                  {action.description}
+                <TableCell style={{ fontSize: 12, color: "#0f172a" }}>
+                  {act.description}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, fontWeight: 700, color: action.priority === "P0" ? "#fda4af" : "#fbbf24" }}>
-                  {action.priority}
+                <TableCell style={{ fontSize: 11, color: "#64748b" }}>
+                  {act.owner}
                 </TableCell>
-                <TableCell style={{ fontSize: 13, color: "#8aa399" }}>
-                  {action.owner}
-                </TableCell>
-                <TableCell style={{ fontSize: 13, fontWeight: 600, color: action.status === "COMPLETED" ? "#6ee7b7" : "#fbbf24" }}>
-                  {action.status}
+                <TableCell
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 700,
+                    textAlign: "right",
+                    color: act.status === "COMPLETED" ? "#047857" : "#b45309",
+                  }}
+                >
+                  {act.status}
                 </TableCell>
               </TableRow>
             ))}
           </Table>
         </Column>
 
-        {/* Commander Sign-Off & Verification Stamp */}
-        <Row
-          style={{
-            backgroundColor: "#151e1b",
-            padding: [16, 20],
-            borderRadius: 6,
-            border: { width: 1, style: "solid", color: "#283832" },
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Column style={{ gap: 2 }}>
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Executive Sign-Off</Text>
-            <Text style={{ fontSize: 15, fontWeight: 700, color: "#e6f0ec" }}>{incident.compliance.signedByVp}</Text>
-            <Text style={{ fontSize: 12, color: "#8aa399" }}>VP of Global Infrastructure • {incident.compliance.signDate}</Text>
-          </Column>
-          <Column style={{ gap: 2, alignItems: "end" }}>
-            <Text style={{ fontSize: 12, color: "#8aa399", textTransform: "uppercase" }}>Security Assurance</Text>
-            <Text style={{ fontSize: 13, color: "#6ee7b7", fontWeight: 700 }}>
-              [VERIFIED] SOC2 Type II Certified
-            </Text>
-            <Text style={{ fontSize: 11, color: "#8aa399", fontFamily: "monospace" }}>
-              {incident.compliance.auditHash.substring(0, 24)}...
-            </Text>
-          </Column>
-        </Row>
+        <Divider style={{ borderTop: { width: 1, style: "solid", color: "#e2e8f0" } }} />
+
+        {/* Section 6: Executive Validation & Cryptographic Sign-Off */}
+        <Column style={{ gap: 8 }}>
+          <Heading level={2} style={{ fontSize: 16, color: "#0f172a", fontWeight: 700 }}>
+            6. Executive Validation &amp; Compliance Sign-Off
+          </Heading>
+          <Table
+            style={{
+              cellPadding: [12, 14],
+              rowBorder: { width: 1, style: "solid", color: "#cbd5e1" },
+              borderCollapse: "collapse",
+              backgroundColor: "#f8fafc",
+            }}
+          >
+            <TableRow>
+              <TableCell style={{ fontSize: 12, color: "#475569", width: "50%" }}>
+                <Span style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase", fontWeight: 700 }}>Executive Sign-Off: </Span>
+                <Span style={{ fontSize: 13, fontWeight: 700, color: "#0f172a" }}>{incident.compliance.signedByVp}</Span>
+                <Span style={{ fontSize: 11, color: "#64748b" }}> ({incident.compliance.signedBySec})</Span>
+              </TableCell>
+              <TableCell style={{ fontSize: 12, color: "#475569", width: "50%" }}>
+                <Span style={{ fontSize: 11, color: "#64748b", textTransform: "uppercase", fontWeight: 700 }}>Audit Hash: </Span>
+                <Span style={{ fontSize: 12, color: "#047857", fontWeight: 700 }}>
+                  [VERIFIED] {incident.compliance.auditHash.substring(0, 24)}...
+                </Span>
+                <Span style={{ fontSize: 11, color: "#64748b" }}> • {incident.compliance.signDate}</Span>
+              </TableCell>
+            </TableRow>
+          </Table>
+        </Column>
       </Column>
     </DocumentRoot>
   );

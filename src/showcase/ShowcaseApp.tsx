@@ -7,16 +7,14 @@ import {
   Globe,
   Image as ImageIcon,
   Mail,
-  ShieldAlert,
   Smartphone,
 } from "lucide-react";
 import { activeP0Incident, resolvedIncident } from "../data/mockIncident";
 import type { IncidentManifest } from "../data/types";
-import EmailPreview from "./EmailPreview";
 import WebPagePreview from "./WebPagePreview";
+import EmailPreview from "./EmailPreview";
 import AuditDocPreview from "./AuditDocPreview";
 import SocialCardPreview from "./SocialCardPreview";
-import { colorSuites } from "../theme/colorSuites";
 
 type ViewTab = "web" | "email" | "document" | "canvas";
 
@@ -29,9 +27,6 @@ export default function ShowcaseApp() {
   const currentIncident: IncidentManifest =
     incidentState === "active" ? activeP0Incident : resolvedIncident;
 
-  // Locked to the user's approved Natural Restorative Slate (Nordic Moss & Slate)
-  const currentTheme = colorSuites["moss-eucalyptus"];
-
   const handleCopy = () => {
     navigator.clipboard?.writeText(JSON.stringify(currentIncident, null, 2));
     setCopied(true);
@@ -42,337 +37,341 @@ export default function ShowcaseApp() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: currentTheme.canvasBg,
-        color: currentTheme.textPrimary,
-        fontFamily: "'Plus Jakarta Sans', sans-serif",
-        transition: "all 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
+        backgroundColor: "#07090e",
+        color: "#f8fafc",
+        fontFamily: "'Geist', -apple-system, BlinkMacSystemFont, sans-serif",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {/* Top Navbar: Submission-Ready Executive Command Bar */}
+      {/* Sleek Floating-Style Header Bar */}
       <header
         style={{
-          borderBottom: "1px solid #283832",
-          backgroundColor: "#151e1b",
-          padding: "14px 28px",
+          position: "sticky",
+          top: 0,
+          zIndex: 50,
+          backgroundColor: "rgba(7, 9, 14, 0.92)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderBottom: "1px solid #1e2230",
+          padding: "12px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: 16,
-          boxShadow: "0 2px 12px rgba(0, 0, 0, 0.4)",
         }}
       >
+        {/* Brand & Suite Indicator */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              backgroundColor: "rgba(253, 164, 175, 0.12)",
-              border: "1px solid rgba(253, 164, 175, 0.3)",
-              borderRadius: 6,
-              padding: "8px 14px",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-            }}
-          >
-            <ShieldAlert size={19} color="#fda4af" />
-            <span style={{ fontWeight: 800, fontSize: 14, letterSpacing: "0.06em", color: "#fda4af", fontFamily: "'Space Mono', monospace" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span
+              style={{
+                width: 9,
+                height: 9,
+                borderRadius: "50%",
+                backgroundColor: incidentState === "active" ? "#f43f5e" : "#10b981",
+                boxShadow: `0 0 10px ${incidentState === "active" ? "#f43f5e" : "#10b981"}`,
+              }}
+            />
+            <span
+              style={{
+                fontWeight: 800,
+                fontSize: 14,
+                letterSpacing: "0.04em",
+                color: "#f8fafc",
+                fontFamily: "'Geist Mono', monospace",
+              }}
+            >
               INCIDENT COMMAND
             </span>
           </div>
-          <span style={{ color: "#283832", fontSize: 18 }}>/</span>
-          <span style={{ fontSize: 16, fontWeight: 700, color: "#e6f0ec", letterSpacing: "-0.01em" }}>
-            ZERO-DAY // {currentIncident.id}
+
+          <span style={{ color: "#1e2230" }}>|</span>
+
+          <span style={{ fontSize: 13, color: "#94a3b8", fontWeight: 600 }}>
+            {currentIncident.id}
           </span>
-          <div
+
+          <span
             style={{
-              backgroundColor: "rgba(110, 231, 183, 0.12)",
-              border: "1px solid rgba(110, 231, 183, 0.3)",
-              borderRadius: 4,
-              padding: "4px 10px",
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: 700,
-              color: "#6ee7b7",
-              fontFamily: "'Space Mono', monospace",
+              color: "#10b981",
+              backgroundColor: "rgba(16, 185, 129, 0.12)",
+              border: "1px solid rgba(16, 185, 129, 0.28)",
+              borderRadius: 4,
+              padding: "2px 8px",
+              fontFamily: "'Geist Mono', monospace",
             }}
           >
-            HYPER ELEMENTS VERIFIED • 0 ERRORS
-          </div>
+            TITANIUM OBSIDIAN
+          </span>
         </div>
 
-        {/* State Toggle: Active Outage vs Resolved (Ergonomic 44px Height) */}
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 13, color: "#8aa399", fontWeight: 600 }}>Scenario:</span>
-          <div
-            style={{
-              backgroundColor: "#1e2a26",
-              border: "1px solid #283832",
-              borderRadius: 8,
-              padding: 4,
-              display: "flex",
-              gap: 6,
-            }}
-          >
-            <button
-              onClick={() => setIncidentState("active")}
-              style={{
-                backgroundColor: incidentState === "active" ? "rgba(253, 164, 175, 0.18)" : "transparent",
-                color: incidentState === "active" ? "#fda4af" : "#8aa399",
-                border: incidentState === "active" ? "1px solid rgba(253, 164, 175, 0.4)" : "1px solid transparent",
-                borderRadius: 6,
-                padding: "8px 16px",
-                fontSize: 13,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                minHeight: 40,
-                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
-              <AlertTriangle size={15} /> P0 Active Outage
-            </button>
-            <button
-              onClick={() => setIncidentState("resolved")}
-              style={{
-                backgroundColor: incidentState === "resolved" ? "rgba(110, 231, 183, 0.18)" : "transparent",
-                color: incidentState === "resolved" ? "#6ee7b7" : "#8aa399",
-                border: incidentState === "resolved" ? "1px solid rgba(110, 231, 183, 0.4)" : "1px solid transparent",
-                borderRadius: 6,
-                padding: "8px 16px",
-                fontSize: 13,
-                fontWeight: 700,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                minHeight: 40,
-                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
-              <CheckCircle2 size={15} /> P0 Mitigated &amp; Restored
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Format Selector Bar: Clean 4 Core Submission Deliverables */}
-      <div
-        style={{
-          borderBottom: "1px solid #283832",
-          backgroundColor: "#111816",
-          padding: "10px 28px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 12,
-        }}
-      >
-        {/* The 4 Outputs Tabs */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        {/* Center: Template Format Segment Switcher */}
+        <div
+          style={{
+            display: "flex",
+            backgroundColor: "#0f1219",
+            border: "1px solid #1e2230",
+            borderRadius: 8,
+            padding: 3,
+            gap: 2,
+          }}
+        >
           <button
             onClick={() => setActiveTab("web")}
             style={{
-              backgroundColor: activeTab === "web" ? "#1e2a26" : "transparent",
-              color: activeTab === "web" ? "#e6f0ec" : "#8aa399",
-              border: `1px solid ${activeTab === "web" ? "#2dd4bf" : "transparent"}`,
-              borderRadius: 6,
-              padding: "0 18px",
-              minHeight: 44,
-              height: 44,
-              fontSize: 14,
-              fontWeight: 700,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              padding: "7px 14px",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              backgroundColor: activeTab === "web" ? "#161924" : "transparent",
+              color: activeTab === "web" ? "#f8fafc" : "#94a3b8",
+              transition: "background 150ms ease, color 150ms ease",
+              fontFamily: "'Geist', sans-serif",
             }}
           >
-            <Globe size={17} color={activeTab === "web" ? "#2dd4bf" : "#8aa399"} />
-            1. Live Status Portal (<code style={{ fontSize: 12, color: activeTab === "web" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Page&gt;</code>)
+            <Globe size={15} />
+            <span>Live Status Portal (&lt;Page&gt;)</span>
           </button>
 
           <button
             onClick={() => setActiveTab("email")}
             style={{
-              backgroundColor: activeTab === "email" ? "#1e2a26" : "transparent",
-              color: activeTab === "email" ? "#e6f0ec" : "#8aa399",
-              border: `1px solid ${activeTab === "email" ? "#2dd4bf" : "transparent"}`,
-              borderRadius: 6,
-              padding: "0 18px",
-              minHeight: 44,
-              height: 44,
-              fontSize: 14,
-              fontWeight: 700,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              padding: "7px 14px",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              backgroundColor: activeTab === "email" ? "#161924" : "transparent",
+              color: activeTab === "email" ? "#f8fafc" : "#94a3b8",
+              transition: "background 150ms ease, color 150ms ease",
+              fontFamily: "'Geist', sans-serif",
             }}
           >
-            <Mail size={17} color={activeTab === "email" ? "#2dd4bf" : "#8aa399"} />
-            2. Email Dispatch (<code style={{ fontSize: 12, color: activeTab === "email" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Email&gt;</code>)
+            <Mail size={15} />
+            <span>SLA Dispatch (&lt;Email&gt;)</span>
           </button>
 
           <button
             onClick={() => setActiveTab("document")}
             style={{
-              backgroundColor: activeTab === "document" ? "#1e2a26" : "transparent",
-              color: activeTab === "document" ? "#e6f0ec" : "#8aa399",
-              border: `1px solid ${activeTab === "document" ? "#2dd4bf" : "transparent"}`,
-              borderRadius: 6,
-              padding: "0 18px",
-              minHeight: 44,
-              height: 44,
-              fontSize: 14,
-              fontWeight: 700,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              padding: "7px 14px",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              backgroundColor: activeTab === "document" ? "#161924" : "transparent",
+              color: activeTab === "document" ? "#f8fafc" : "#94a3b8",
+              transition: "background 150ms ease, color 150ms ease",
+              fontFamily: "'Geist', sans-serif",
             }}
           >
-            <FileText size={17} color={activeTab === "document" ? "#2dd4bf" : "#8aa399"} />
-            3. Formal RCA Report (<code style={{ fontSize: 12, color: activeTab === "document" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Document&gt;</code>)
+            <FileText size={15} />
+            <span>Whitepaper Dossier (&lt;Document&gt;)</span>
           </button>
 
           <button
             onClick={() => setActiveTab("canvas")}
             style={{
-              backgroundColor: activeTab === "canvas" ? "#1e2a26" : "transparent",
-              color: activeTab === "canvas" ? "#e6f0ec" : "#8aa399",
-              border: `1px solid ${activeTab === "canvas" ? "#2dd4bf" : "transparent"}`,
-              borderRadius: 6,
-              padding: "0 18px",
-              minHeight: 44,
-              height: 44,
-              fontSize: 14,
-              fontWeight: 700,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              padding: "7px 14px",
+              borderRadius: 6,
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              backgroundColor: activeTab === "canvas" ? "#161924" : "transparent",
+              color: activeTab === "canvas" ? "#f8fafc" : "#94a3b8",
+              transition: "background 150ms ease, color 150ms ease",
+              fontFamily: "'Geist', sans-serif",
             }}
           >
-            <ImageIcon size={17} color={activeTab === "canvas" ? "#2dd4bf" : "#8aa399"} />
-            4. Resolution Badge (<code style={{ fontSize: 12, color: activeTab === "canvas" ? "#2dd4bf" : "#8aa399", fontFamily: "'Space Mono', monospace" }}>&lt;Canvas&gt;</code>)
+            <ImageIcon size={15} />
+            <span>Resolution Badge (&lt;Canvas&gt;)</span>
           </button>
         </div>
 
-        {/* Action Controls (Ergonomic 44px Height) */}
+        {/* Right Action Controls: Scenario Toggle & Copy */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* Scenario Toggle */}
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "#0f1219",
+              border: "1px solid #1e2230",
+              borderRadius: 8,
+              padding: 3,
+              gap: 2,
+            }}
+          >
+            <button
+              onClick={() => setIncidentState("active")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "6px 12px",
+                borderRadius: 6,
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: "pointer",
+                border: "none",
+                backgroundColor:
+                  incidentState === "active" ? "rgba(244, 63, 94, 0.2)" : "transparent",
+                color: incidentState === "active" ? "#f43f5e" : "#94a3b8",
+                transition: "background 150ms ease, color 150ms ease",
+                fontFamily: "'Geist Mono', monospace",
+              }}
+            >
+              <AlertTriangle size={13} />
+              <span>ACTIVE OUTAGE</span>
+            </button>
+
+            <button
+              onClick={() => setIncidentState("resolved")}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "6px 12px",
+                borderRadius: 6,
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: "pointer",
+                border: "none",
+                backgroundColor:
+                  incidentState === "resolved" ? "rgba(16, 185, 129, 0.2)" : "transparent",
+                color: incidentState === "resolved" ? "#10b981" : "#94a3b8",
+                transition: "background 150ms ease, color 150ms ease",
+                fontFamily: "'Geist Mono', monospace",
+              }}
+            >
+              <CheckCircle2 size={13} />
+              <span>MITIGATED</span>
+            </button>
+          </div>
+
+          {/* Email Viewport Toggle */}
           {activeTab === "email" && (
             <button
               onClick={() => setIsMobileView(!isMobileView)}
               style={{
-                backgroundColor: "#1e2a26",
-                color: isMobileView ? "#2dd4bf" : "#8aa399",
-                border: "1px solid #283832",
-                borderRadius: 6,
-                padding: "0 16px",
-                minHeight: 44,
-                height: 44,
-                fontSize: 13,
-                fontWeight: 600,
-                cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
-                gap: 8,
-                transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+                gap: 6,
+                padding: "7px 12px",
+                borderRadius: 6,
+                fontSize: 12,
+                fontWeight: 600,
+                cursor: "pointer",
+                backgroundColor: isMobileView ? "#161924" : "#0f1219",
+                border: "1px solid #1e2230",
+                color: isMobileView ? "#f8fafc" : "#94a3b8",
+                fontFamily: "'Geist', sans-serif",
               }}
             >
-              <Smartphone size={15} /> {isMobileView ? "Mobile (375px)" : "Desktop (600px)"}
+              <Smartphone size={14} />
+              <span>{isMobileView ? "Mobile (375px)" : "Desktop (600px)"}</span>
             </button>
           )}
 
+          {/* Copy Manifest Button */}
           <button
             onClick={handleCopy}
             style={{
-              backgroundColor: "#1e2a26",
-              color: "#e6f0ec",
-              border: "1px solid #283832",
-              borderRadius: 6,
-              padding: "0 18px",
-              minHeight: 44,
-              height: 44,
-              fontSize: 13,
-              fontWeight: 600,
-              cursor: "pointer",
               display: "flex",
               alignItems: "center",
-              gap: 8,
-              transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+              gap: 6,
+              padding: "7px 14px",
+              borderRadius: 6,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: "pointer",
+              backgroundColor: "#161924",
+              border: "1px solid #1e2230",
+              color: "#f8fafc",
+              transition: "background 150ms ease",
+              fontFamily: "'Geist', sans-serif",
             }}
           >
-            <Copy size={15} /> {copied ? "Manifest Copied!" : "Copy Manifest JSON"}
+            <Copy size={13} />
+            <span>{copied ? "Copied JSON!" : "Copy Manifest"}</span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Main Workspace Preview Container */}
+      {/* Main Content Area */}
       <main
         style={{
-          padding: 32,
+          flex: 1,
           display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          overflowX: "auto",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: activeTab === "document" ? "0px" : "32px 16px",
+          width: "100%",
+          boxSizing: "border-box",
         }}
       >
-        <div
-          style={{
-            width:
-              activeTab === "email"
-                ? isMobileView
-                  ? "375px"
-                  : "640px"
-                : activeTab === "web"
-                ? "980px"
-                : activeTab === "document"
-                ? "840px"
-                : "1200px",
-            maxWidth: "100%",
-            transition: "width 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
-            boxShadow: "0 16px 40px rgba(0, 0, 0, 0.6)",
-            borderRadius: 12,
-            border: "1px solid #283832",
-            overflow: "hidden",
-            backgroundColor: "#0f1513",
-          }}
-        >
-          {activeTab === "web" && (
-            <WebPagePreview
-              incident={currentIncident}
-              typography="option-c"
-              suite="moss-eucalyptus"
-            />
-          )}
+        <div style={{ width: "100%", maxWidth: activeTab === "document" ? "100%" : "960px" }}>
+          {activeTab === "web" && <WebPagePreview incident={currentIncident} />}
           {activeTab === "email" && (
-            <EmailPreview
-              incident={currentIncident}
-              typography="option-c"
-              suite="moss-eucalyptus"
-            />
+            <EmailPreview incident={currentIncident} isMobile={isMobileView} />
           )}
-          {activeTab === "document" && (
-            <AuditDocPreview
-              incident={currentIncident}
-              typography="option-c"
-            />
-          )}
-          {activeTab === "canvas" && (
-            <SocialCardPreview
-              incident={currentIncident}
-              typography="option-c"
-            />
-          )}
+          {activeTab === "document" && <AuditDocPreview incident={currentIncident} />}
+          {activeTab === "canvas" && <SocialCardPreview incident={currentIncident} />}
         </div>
       </main>
+
+      {/* Minimal Engineering Footer */}
+      <footer
+        style={{
+          borderTop: "1px solid #1e2230",
+          backgroundColor: "#07090e",
+          padding: "16px 24px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 12,
+          fontSize: 12,
+          color: "#94a3b8",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span>Incident Command // Zero-Day</span>
+          <span>•</span>
+          <span>Hyper Elements Template Challenge</span>
+        </div>
+        <div>
+          <span>Engine: </span>
+          <a
+            href="https://hyperelements.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#38bdf8", textDecoration: "none" }}
+          >
+            @hyper-elements/react
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }
